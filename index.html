@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TEMPLATE</title>
-  <meta name="description" content="A minimal, premium website template in black and white.">
+  <title>Pathways to Health</title>
+  <meta name="description" content="A student-run pre-health conference at Pensacola High School. One day of keynotes, panels, and real conversations with doctors, nurses, researchers, and public health professionals.">
+  <link rel="icon" type="image/png" href="images/favicon-32.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -17,45 +18,136 @@
   <!-- ===== Navbar ===== -->
   <header class="site-header">
     <nav class="container nav" aria-label="Main">
-      <a class="wordmark" href="index.html">TEMPLATE</a>
+      <a class="brand" href="index.html">
+        <img src="images/logo-96.png" alt="Pathways to Health" width="44" height="44">
+      </a>
       <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
         <span></span><span></span>
       </button>
-      <ul class="nav__links" id="nav-links">
-        <li><a class="link" href="index.html" aria-current="page">Home</a></li>
-        <li><a class="link" href="about.html">About</a></li>
-      </ul>
+      <div class="nav__links" id="nav-links">
+        <ul class="nav__main">
+          <li><a class="link" href="index.html" aria-current="page">Home</a></li>
+          <li><a class="link" href="about.html">About</a></li>
+          <li><a class="link" href="speakers.html">Speakers</a></li>
+          <li><a class="link" href="schedule.html">Schedule</a></li>
+        </ul>
+        <ul class="nav__end">
+          <li><a class="btn btn--primary" href="index.html#updates">Get updates</a></li>
+        </ul>
+      </div>
     </nav>
   </header>
 
   <main id="main">
     <!-- Hero -->
     <section class="hero">
-      <div class="container">
-        <span class="eyebrow">Est. 2026</span>
-        <h1 class="display">Built with intention.</h1>
-        <p class="lead">A short introduction to who you are and what you do. One or two sentences that make the value clear at a glance.</p>
-        <a class="btn btn--primary" href="about.html">Learn more <span class="arrow" aria-hidden="true">→</span></a>
+      <div class="container hero__inner">
+        <h1 class="display-xl">Pathways <span>to Health</span></h1>
+        <div class="dot-rule" aria-hidden="true"></div>
+        <!-- Branching paths: the rule above is the trunk, and these split it into careers.
+             The gold route cycles through the careers (js/main.js). -->
+        <div class="hero__paths">
+          <svg class="paths" viewBox="0 0 600 240" preserveAspectRatio="none" focusable="false" aria-hidden="true">
+            <g class="paths__lines">
+              <path d="M0,120 H160"/>
+              <path d="M160,120 C230,120 250,40 320,40"/>
+              <path d="M160,120 H320"/>
+              <path d="M160,120 C230,120 250,200 320,200"/>
+              <path d="M320,40 C390,40 410,20 480,20 H600"/>
+              <path d="M320,40 C390,40 410,60 480,60 H600"/>
+              <path d="M320,120 C390,120 410,100 480,100 H600"/>
+              <path d="M320,120 C390,120 410,140 480,140 H600"/>
+              <path d="M320,200 C390,200 410,180 480,180 H600"/>
+              <path d="M320,200 C390,200 410,220 480,220 H600"/>
+            </g>
+            <path class="paths__trunk" d="M0,120 H160"/>
+            <g class="paths__routes">
+              <path class="is-active" d="M160,120 C230,120 250,40 320,40 C390,40 410,20 480,20 H600"/>
+              <path d="M160,120 C230,120 250,40 320,40 C390,40 410,60 480,60 H600"/>
+              <path d="M160,120 H320 C390,120 410,100 480,100 H600"/>
+              <path d="M160,120 H320 C390,120 410,140 480,140 H600"/>
+              <path d="M160,120 C230,120 250,200 320,200 C390,200 410,180 480,180 H600"/>
+              <path d="M160,120 C230,120 250,200 320,200 C390,200 410,220 480,220 H600"/>
+            </g>
+            <!-- data-routes: the .paths__routes (by position) that pass through each dot -->
+            <g class="paths__nodes">
+              <path class="is-active" data-routes="0 1 2 3 4 5" d="M160,120 h0"/>
+              <path class="is-active" data-routes="0 1" d="M320,40 h0"/>
+              <path data-routes="2 3" d="M320,120 h0"/>
+              <path data-routes="4 5" d="M320,200 h0"/>
+            </g>
+          </svg>
+          <!-- One label per branch end, in the same order as .paths__routes; --y is the end's height in the 240-unit art -->
+          <ul class="paths__labels" aria-label="Careers covered">
+            <li class="is-active" style="--y: 20">Medicine</li>
+            <li style="--y: 60">Nursing</li>
+            <li style="--y: 100">Public Health</li>
+            <li style="--y: 140">Research</li>
+            <li style="--y: 180">Pharmacy</li>
+            <li style="--y: 220">Dentistry</li>
+          </ul>
+        </div>
+        <p class="lead">A Pre-Health Conference <span>for the Next Generation of Healthcare Leaders</span></p>
+        <p class="hero__details"><time datetime="2027-02-01">February 1, 2027</time><span>Pensacola High School</span></p>
+        <!-- Email signup. Set data-endpoint to a form service URL (e.g. Formspree) to collect addresses. -->
+        <form class="signup" id="updates" data-endpoint="" novalidate>
+          <label class="signup__label" for="signup-email">Get conference updates</label>
+          <div class="signup__row">
+            <input class="input" id="signup-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required aria-describedby="signup-status">
+            <button class="btn btn--primary" type="submit">Notify me</button>
+          </div>
+          <p class="signup__status small" id="signup-status" role="status">Speaker announcements and registration dates. No spam.</p>
+        </form>
+        <!-- Days until the event. data-countdown is the conference date (YYYY-MM-DD);
+             keep it in step with the date above. Leave it empty to hide the countdown. -->
+        <p class="countdown" data-countdown="2027-02-01">
+          <span class="countdown__num" data-countdown-days>115</span>
+          <span class="countdown__label" data-countdown-label>days to go</span>
+        </p>
+      </div>
+    </section>
+
+    <!-- What we do -->
+    <section class="section" aria-labelledby="what-we-do">
+      <div class="container split">
+        <div>
+          <span class="eyebrow">What we do</span>
+          <h2 class="h1" id="what-we-do">See what a career in healthcare really looks like, <em>before you pick a major.</em></h2>
+        </div>
+        <div class="split__body">
+          <p>Pathways to Health is a one-day pre-health conference organized by students at Pensacola High School. It's for anyone thinking about a career in medicine, nursing, public health, research, or anywhere else in healthcare, whether you've known you wanted to be a doctor since you were six or you're just starting to wonder what's out there.</p>
+          <p>The day is built around keynotes, panels, and real conversations with doctors, nurses, researchers, and public health professionals. You'll hear them talk honestly about how they got where they are, ask the questions you can't get answered online, and meet people who can help with your next step.</p>
+          <p>Modeled after the Harvard Undergraduate World Pre-Health Conference.<a class="footnote-ref" href="#footnote-harvard" aria-describedby="footnote-harvard">*</a></p>
+          <p class="page-header__details"><span>February 2027</span><span>Pensacola High School</span></p>
+          <div class="actions">
+            <a class="text-link" href="about.html">More about the conference <span class="arrow" aria-hidden="true">→</span></a>
+          </div>
+          <p class="footnote small" id="footnote-harvard">* Pathways to Health is an independent, student-run event. It is not affiliated with, sponsored by, or endorsed by Harvard University or the Harvard Undergraduate World Pre-Health Conference.</p>
+        </div>
       </div>
     </section>
 
     <!-- Statement -->
-    <section class="section">
+    <section class="section section--cream">
       <div class="container">
-        <p class="statement h2">Less, but better. <span class="muted">Every detail considered, nothing left to chance.</span></p>
+        <blockquote class="statement display">“Every great healthcare career begins with a single question: <em>what if I could make a difference?</em>”</blockquote>
       </div>
     </section>
   </main>
 
   <!-- ===== Footer ===== -->
   <footer class="site-footer">
-    <div class="container footer__inner">
-      <a class="wordmark" href="index.html">TEMPLATE</a>
-      <ul class="footer__links">
-        <li><a class="link" href="index.html">Home</a></li>
-        <li><a class="link" href="about.html">About</a></li>
-      </ul>
-      <p class="footer__copy">© <span data-year>2026</span> TEMPLATE</p>
+    <div class="container">
+      <div class="footer__top">
+        <p class="footer__tagline">Pathways to Health</p>
+        <ul class="footer__links">
+          <li><a class="link" href="index.html">Home</a></li>
+          <li><a class="link" href="about.html">About</a></li>
+        </ul>
+      </div>
+      <div class="footer__bottom">
+        <p>© <span data-year>2026</span> Pathways to Health</p>
+      </div>
     </div>
   </footer>
 
