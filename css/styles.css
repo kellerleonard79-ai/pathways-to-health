@@ -12,9 +12,9 @@
   --surface-2: #eaf0ec;
 
   /* Type */
-  --font-display: "Instrument Serif", Georgia, serif;
-  --font-body: "Instrument Sans", system-ui, sans-serif;
-  --font-mono: "DM Mono", ui-monospace, monospace;
+  --font-display: "Instrument Serif", serif;
+  --font-body: "Instrument Sans", sans-serif;
+  --font-mono: "Instrument Sans", sans-serif;
 
   /* Space (4px base) */
   --space-1: 4px;

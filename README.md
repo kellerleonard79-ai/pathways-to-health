@@ -20,7 +20,7 @@ supabase/        Registration backend: database migration and the "register" Edg
 ## Customizing
 
 - **Design system:** colors, type, spacing and component rules are documented in `DESIGN.md` (the Verdant scheme). Follow it when adding pages or components.
-- **Fonts:** Instrument Serif (display), Instrument Sans (UI and body) and DM Mono (data) load from Google Fonts in each page's `<head>`. To swap them, change that link and the `--font-display` / `--font-body` / `--font-mono` tokens in `css/styles.css`.
+- **Fonts:** Instrument Serif (display), Instrument Sans (UI and body) load from Google Fonts in each page's `<head>`. To swap them, change that link and the `--font-display` / `--font-body` / `--font-mono` tokens in `css/styles.css`.
 - **Colors and spacing:** edit the tokens in `:root` at the top of `css/styles.css`.
 - **Navbar and footer:** these are duplicated in each HTML file. Keep them in sync when editing, and move `aria-current="page"` to the current page's nav link on any new page.
 

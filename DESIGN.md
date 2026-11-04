@@ -57,11 +57,11 @@ These five are the whole palette. Body text is Green. Tints come only from opaci
 
 ## Type
 
-**Instrument Serif · Instrument Sans · DM Mono**
+**Instrument Serif · Instrument Sans**
 
 - **Instrument Serif** — Display and headlines, 32px and up. Use italic for emphasis, often in gold at large sizes.
 - **Instrument Sans** — UI, headings and body text. Weights: 400 for body, 500 for UI, 600 for headings.
-- **DM Mono** — The `data` style (catalogue numbers, dimensions, dates).
+- **Instrument Sans** — The `data` style (catalogue numbers, dimensions, dates).
 
 ### Scale
 
@@ -75,7 +75,7 @@ These five are the whole palette. Body text is Green. Tints come only from opaci
 | body        | The works are hung in natural light… | Sans 400   | 16 / 1.6                      | Color `--primary`, max 64ch |
 | small       | Open Tuesday to Sunday, 10:00–18:00 | Sans 400    | 13 / 1.5                      |       |
 | eyebrow     | SPRING EXHIBITION             | Sans 500, uppercase | 11 · +14% tracking          | Color `--primary` |
-| data        | Cat. 014 · 42 × 30 cm · 2026  | DM Mono 400       | 12                            |       |
+| data        | Cat. 014 · 42 × 30 cm · 2026  | Instrument Sans 400      | 12                            |       |
 
 Headings (display through h3) are set in Green (`--primary`).
 
@@ -128,7 +128,7 @@ All buttons: 44px min height, Instrument Sans 600, 14px.
 
 ### Cards
 
-- **Image card** — 4:5 image (Mist placeholder, radius 0), then a DM Mono catalogue line (`Cat. 014`), a serif title with one italic phrase (*Fern study, morning*), and a Sans small caption ("Graphite and gouache").
+- **Image card** — 4:5 image (Mist placeholder, radius 0), then a Instrument Sans catalogue line (`Cat. 014`), a serif title with one italic phrase (*Fern study, morning*), and a Sans small caption ("Graphite and gouache").
 - **Info card** — White fill, 1px Mist border, radius 3. Green eyebrow ("VISIT"), serif heading ("Open six days a week"), body text, and a text link ("Plan a visit →").
 
 ### Inverse panel
@@ -175,7 +175,7 @@ All buttons: 44px min height, Instrument Sans 600, 14px.
   /* Type */
   --font-display: "Instrument Serif", serif;
   --font-body:    "Instrument Sans", sans-serif;
-  --font-mono:    "DM Mono", monospace;
+  --font-mono:    "Instrument Sans", sans-serif;
 
   /* Space (4px base) */
   --space-1: 4px;
@@ -199,5 +199,5 @@ Google Fonts:
 ```html
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 ```

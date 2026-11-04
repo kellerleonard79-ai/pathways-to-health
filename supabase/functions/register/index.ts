@@ -127,9 +127,9 @@ function confirmationEmail(r: Registration) {
 
   const html = `<!DOCTYPE html>
 <html lang="en">
-<body style="margin:0;padding:24px;background:#ffffff;color:#084021;font-family:Helvetica,Arial,sans-serif;font-size:16px;line-height:1.5">
+<body style="margin:0;padding:24px;background:#ffffff;color:#084021;font-family:"Instrument Sans",sans-serif;font-size:16px;line-height:1.5">
   <div style="max-width:560px;margin:0 auto">
-    <h1 style="margin:0 0 16px;font-family:Georgia,serif;font-weight:400;font-size:32px;line-height:1.1">You're registered.</h1>
+    <h1 style="margin:0 0 16px;font-family:"Instrument Serif",serif;font-weight:400;font-size:32px;line-height:1.1">You're registered.</h1>
     <p style="margin:0 0 16px">Hi ${escapeHtml(first)},</p>
     <p style="margin:0 0 24px">See you at <strong>Pathways to Health</strong> on <strong>February 1, 2027</strong> at Pensacola High School.</p>
     <table role="presentation" style="width:100%;border-collapse:collapse;margin:0 0 24px">
