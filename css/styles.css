@@ -1232,7 +1232,7 @@ ol {
    on every device. Each section fills the screen below the sticky header
    (scroll-padding keeps the header from covering a section's top), with its
    content centered. snap-stop means a hard swipe can't skip a stop.
-   Sections taller than the screen (the speaker grid, the schedule) scroll
+   Sections taller than the screen (the speaker grid) scroll
    freely inside, then the next one snaps in.
    ========================================================================== */
 html.snap-sections {
