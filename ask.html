@@ -64,8 +64,10 @@
              like the registration form; see README, "Registration backend".
              data-closes is the first day the form is replaced by the "closed" notice
              below (the day after the deadline). To extend the deadline, change it and
-             the dates in the text. -->
-        <form class="register" data-closes="2027-01-19" data-endpoint="https://qsozyqnofuchttyigqhp.supabase.co/functions/v1/ask" data-key="sb_publishable_E7BUFubj4NgjQLLe2GDYeg_RGMzfdkv" novalidate>
+             the dates in the text.
+             method="post" is a fallback: if js/main.js doesn't run, the browser's own
+             submit sends a POST instead of putting the answers in the page address. -->
+        <form class="register" method="post" data-closes="2027-01-19" data-endpoint="https://qsozyqnofuchttyigqhp.supabase.co/functions/v1/ask" data-key="sb_publishable_E7BUFubj4NgjQLLe2GDYeg_RGMzfdkv" novalidate>
           <p class="register__intro small">Send in a question by January 18 and we'll pass it on to the speakers ahead of the panels and Q&amp;A. Fields marked * are required.</p>
 
           <fieldset class="register__group">

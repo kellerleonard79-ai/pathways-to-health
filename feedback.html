@@ -64,8 +64,10 @@
     <section class="section section--flush">
       <div class="container">
         <!-- Feedback. Posts to the Supabase "feedback" Edge Function, set up
-             like the registration form; see README, "Registration backend". -->
-        <form class="register" data-endpoint="https://qsozyqnofuchttyigqhp.supabase.co/functions/v1/feedback" data-key="sb_publishable_E7BUFubj4NgjQLLe2GDYeg_RGMzfdkv" novalidate>
+             like the registration form; see README, "Registration backend".
+             method="post" is a fallback: if js/main.js doesn't run, the browser's own
+             submit sends a POST instead of putting the answers in the page address. -->
+        <form class="register" method="post" data-endpoint="https://qsozyqnofuchttyigqhp.supabase.co/functions/v1/feedback" data-key="sb_publishable_E7BUFubj4NgjQLLe2GDYeg_RGMzfdkv" novalidate>
           <p class="register__intro small">Tell us how the day went. It takes a minute, and it shapes next year's conference. Only the rating is required.</p>
 
           <fieldset class="register__group">
