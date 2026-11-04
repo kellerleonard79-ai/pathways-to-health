@@ -42,8 +42,9 @@
     window.addEventListener("scroll", onScroll, { passive: true });
   }
 
-  // Forms: registration (register.html) and questions for speakers (ask.html).
-  // Both share the .register styles; the parent fields are registration only.
+  // Forms: registration (register.html), questions for speakers (ask.html) and
+  // feedback (feedback.html). All share the .register styles; the parent fields
+  // are registration only.
   const form = document.querySelector(".register");
 
   if (form) {
@@ -52,6 +53,16 @@
     const minorToggle = form.querySelector("[data-minor-toggle]");
     const parent = form.querySelector(".register__parent");
     const done = document.querySelector(".register__done");
+    const closed = document.querySelector(".register__closed");
+
+    // From the data-closes date (YYYY-MM-DD) on, show the "closed" notice instead
+    if (form.dataset.closes && closed) {
+      const [y, m, d] = form.dataset.closes.split("-").map(Number);
+      if (new Date() >= new Date(y, m - 1, d)) {
+        form.hidden = true;
+        closed.hidden = false;
+      }
+    }
 
     function setStatus(message, isError) {
       status.textContent = message;

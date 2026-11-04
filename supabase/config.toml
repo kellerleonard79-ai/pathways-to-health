@@ -429,3 +429,9 @@ enabled = true
 verify_jwt = false
 import_map = "./functions/ask/deno.json"
 entrypoint = "./functions/ask/index.ts"
+
+[functions.feedback]
+enabled = true
+verify_jwt = false
+import_map = "./functions/feedback/deno.json"
+entrypoint = "./functions/feedback/index.ts"

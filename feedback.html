@@ -1,10 +1,22 @@
 <!DOCTYPE html>
-<html lang="en" class="snap-sections">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Feedback — Pathways to Health</title>
-  <meta name="description" content="Feedback — Pathways to Health.">
+  <meta name="description" content="Tell us how Pathways to Health went: what worked, and what we should change next time.">
+  <!-- For attendees after the event; keep it out of search results -->
+  <meta name="robots" content="noindex">
+  <!-- Link previews. PLACEHOLDER: og:image needs a full URL; once the site has an address, change it to https://<your-domain>/images/og.png (see plan.md, J) -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Pathways to Health">
+  <meta property="og:title" content="Feedback — Pathways to Health">
+  <meta property="og:description" content="Tell us how Pathways to Health went: what worked, and what we should change next time.">
+  <meta property="og:image" content="images/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Pathways to Health: February 6, 2027, Pensacola High School">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" type="image/png" href="images/favicon-32.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -42,7 +54,83 @@
   <main id="main">
     <section class="page-header">
       <div class="container">
+        <span class="eyebrow">After the conference</span>
         <h1 class="display">Feedback</h1>
+        <div class="dot-rule" aria-hidden="true"></div>
+        <p class="page-header__details"><time datetime="2027-02-06">February 6, 2027</time><span>Pensacola High School</span></p>
+      </div>
+    </section>
+
+    <section class="section section--flush">
+      <div class="container">
+        <!-- Feedback. Posts to the Supabase "feedback" Edge Function, set up
+             like the registration form; see README, "Registration backend". -->
+        <form class="register" data-endpoint="https://qsozyqnofuchttyigqhp.supabase.co/functions/v1/feedback" data-key="sb_publishable_E7BUFubj4NgjQLLe2GDYeg_RGMzfdkv" novalidate>
+          <p class="register__intro small">Tell us how the day went. It takes a minute, and it shapes next year's conference. Only the rating is required.</p>
+
+          <fieldset class="register__group">
+            <legend class="h2">The day</legend>
+            <div class="field-row">
+              <div class="field">
+                <label for="fb-rating">How would you rate it? <span class="field__req" aria-hidden="true">*</span></label>
+                <select class="input" id="fb-rating" name="rating" required>
+                  <option value="">Choose one</option>
+                  <option value="5">5 · Excellent</option>
+                  <option value="4">4 · Good</option>
+                  <option value="3">3 · Okay</option>
+                  <option value="2">2 · Not great</option>
+                  <option value="1">1 · Poor</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="fb-role">I came as</label>
+                <select class="input" id="fb-role" name="role">
+                  <option value="">Choose one</option>
+                  <option value="student">A student</option>
+                  <option value="parent">A parent or guardian</option>
+                  <option value="speaker">A speaker</option>
+                  <option value="teacher">A teacher</option>
+                  <option value="other">Something else</option>
+                </select>
+              </div>
+            </div>
+            <div class="field">
+              <label for="fb-useful">What was most useful?</label>
+              <textarea class="input" id="fb-useful" name="most_useful" rows="4" maxlength="2000"></textarea>
+            </div>
+            <div class="field">
+              <label for="fb-change">What should we change next time?</label>
+              <textarea class="input" id="fb-change" name="change" rows="4" maxlength="2000"></textarea>
+            </div>
+          </fieldset>
+
+          <fieldset class="register__group">
+            <legend class="h2">Want a reply?</legend>
+            <div class="field">
+              <label for="fb-email">Email</label>
+              <input class="input" id="fb-email" name="email" type="email" autocomplete="email" maxlength="254" placeholder="you@example.com" aria-describedby="fb-email-hint">
+              <p class="field__hint small" id="fb-email-hint">Only if you'd like us to get back to you. Leave it blank to stay anonymous.</p>
+            </div>
+          </fieldset>
+
+          <!-- Honeypot: hidden from people, filled in by bots. The server ignores any submission that has it. -->
+          <div class="register__trap" aria-hidden="true">
+            <label for="fb-company">Company</label>
+            <input id="fb-company" name="company" type="text" tabindex="-1" autocomplete="off">
+          </div>
+
+          <div class="register__submit">
+            <button class="btn btn--primary btn--lg" type="submit">Send feedback</button>
+            <p class="register__status small" role="status"></p>
+          </div>
+        </form>
+
+        <div class="register__done notice" tabindex="-1" hidden>
+          <div>
+            <h2 class="h2">Thanks for the feedback.</h2>
+            <p>We read every response, and it goes straight into planning next year.</p>
+          </div>
+        </div>
       </div>
     </section>
   </main>
@@ -59,7 +147,6 @@
           <li><a class="link" href="schedule.html">Schedule</a></li>
           <li><a class="link" href="register.html">Register</a></li>
           <li><a class="link" href="ask.html">Ask a Question</a></li>
-          <li><a class="link" href="feedback.html" aria-current="page">Feedback</a></li>
         </ul>
       </div>
       <div class="footer__bottom">

@@ -1,1 +1,7 @@
 .playwright-mcp/
+
+# Source files that aren't part of the site (kept locally, not published)
+logo.PNG
+pexels-werner-pfennig-6949979.jpg
+images/hero-speaker.webp
+Color and type pairings exploration.pdf

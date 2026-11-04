@@ -5,6 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ask A Question — Pathways to Health</title>
   <meta name="description" content="Send a question to the speakers at Pathways to Health before the conference on February 6, 2027.">
+  <!-- Link previews. PLACEHOLDER: og:image needs a full URL; once the site has an address, change it to https://<your-domain>/images/og.png (see plan.md, J) -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Pathways to Health">
+  <meta property="og:title" content="Ask A Question — Pathways to Health">
+  <meta property="og:description" content="Send a question to the speakers at Pathways to Health before the conference on February 6, 2027.">
+  <meta property="og:image" content="images/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Pathways to Health: February 6, 2027, Pensacola High School">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" type="image/png" href="images/favicon-32.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -51,8 +61,11 @@
     <section class="section section--flush">
       <div class="container">
         <!-- Questions for speakers. Posts to the Supabase "ask" Edge Function, set up
-             like the registration form; see README, "Registration backend". -->
-        <form class="register" data-endpoint="https://qsozyqnofuchttyigqhp.supabase.co/functions/v1/ask" data-key="sb_publishable_E7BUFubj4NgjQLLe2GDYeg_RGMzfdkv" novalidate>
+             like the registration form; see README, "Registration backend".
+             data-closes is the first day the form is replaced by the "closed" notice
+             below (the day after the deadline). To extend the deadline, change it and
+             the dates in the text. -->
+        <form class="register" data-closes="2027-01-19" data-endpoint="https://qsozyqnofuchttyigqhp.supabase.co/functions/v1/ask" data-key="sb_publishable_E7BUFubj4NgjQLLe2GDYeg_RGMzfdkv" novalidate>
           <p class="register__intro small">Send in a question by January 18 and we'll pass it on to the speakers ahead of the panels and Q&amp;A. Fields marked * are required.</p>
 
           <fieldset class="register__group">
@@ -94,6 +107,13 @@
           </div>
         </form>
 
+        <div class="register__closed notice" hidden>
+          <div>
+            <h2 class="h2">Questions are closed.</h2>
+            <p>The deadline was January 18. Bring your question to the open Q&amp;A on February 6.</p>
+          </div>
+        </div>
+
         <div class="register__done notice" tabindex="-1" hidden>
           <div>
             <h2 class="h2">Thanks, we've got your question.</h2>
@@ -116,7 +136,6 @@
           <li><a class="link" href="schedule.html">Schedule</a></li>
           <li><a class="link" href="register.html">Register</a></li>
           <li><a class="link" href="ask.html" aria-current="page">Ask a Question</a></li>
-          <li><a class="link" href="feedback.html">Feedback</a></li>
         </ul>
       </div>
       <div class="footer__bottom">

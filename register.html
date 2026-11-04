@@ -5,6 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Register — Pathways to Health</title>
   <meta name="description" content="Register for Pathways to Health, a student-run pre-health conference at Pensacola High School on February 6, 2027.">
+  <!-- Link previews. PLACEHOLDER: og:image needs a full URL; once the site has an address, change it to https://<your-domain>/images/og.png (see plan.md, J) -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Pathways to Health">
+  <meta property="og:title" content="Register — Pathways to Health">
+  <meta property="og:description" content="Register for Pathways to Health, a student-run pre-health conference at Pensacola High School on February 6, 2027.">
+  <meta property="og:image" content="images/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Pathways to Health: February 6, 2027, Pensacola High School">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" type="image/png" href="images/favicon-32.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -70,24 +80,6 @@
               <div class="field">
                 <label for="reg-phone">Phone <span class="field__req" aria-hidden="true">*</span></label>
                 <input class="input" id="reg-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="30" required>
-              </div>
-            </div>
-            <div class="field">
-              <label for="reg-street">Street address <span class="field__req" aria-hidden="true">*</span></label>
-              <input class="input" id="reg-street" name="street" type="text" autocomplete="street-address" maxlength="200" required>
-            </div>
-            <div class="field-row field-row--address">
-              <div class="field">
-                <label for="reg-city">City <span class="field__req" aria-hidden="true">*</span></label>
-                <input class="input" id="reg-city" name="city" type="text" autocomplete="address-level2" maxlength="100" required>
-              </div>
-              <div class="field">
-                <label for="reg-state">State <span class="field__req" aria-hidden="true">*</span></label>
-                <input class="input" id="reg-state" name="state" type="text" autocomplete="address-level1" maxlength="50" value="FL" required>
-              </div>
-              <div class="field">
-                <label for="reg-zip">ZIP <span class="field__req" aria-hidden="true">*</span></label>
-                <input class="input" id="reg-zip" name="zip" type="text" autocomplete="postal-code" inputmode="numeric" maxlength="10" pattern="\d{5}(-\d{4})?" required>
               </div>
             </div>
           </fieldset>
@@ -169,6 +161,7 @@
           </div>
 
           <div class="register__submit">
+            <p class="register__privacy small">We use your details only to organize the conference and to contact you, and your parent or guardian, about it. We don't share them with anyone else.</p>
             <button class="btn btn--primary btn--lg" type="submit">Register</button>
             <p class="register__status small" role="status"></p>
           </div>
@@ -198,7 +191,6 @@
           <li><a class="link" href="schedule.html">Schedule</a></li>
           <li><a class="link" href="register.html" aria-current="page">Register</a></li>
           <li><a class="link" href="ask.html">Ask a Question</a></li>
-          <li><a class="link" href="feedback.html">Feedback</a></li>
         </ul>
       </div>
       <div class="footer__bottom">

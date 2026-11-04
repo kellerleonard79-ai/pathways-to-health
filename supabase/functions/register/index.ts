@@ -32,16 +32,11 @@ const INTERESTS = [
 const CONTACT_EMAIL = "contact@example.com";
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const ZIP = /^\d{5}(-\d{4})?$/;
 
 type Registration = {
   name: string;
   email: string;
   phone: string;
-  street: string;
-  city: string;
-  state: string;
-  zip: string;
   school: string;
   grade: string;
   interests: string[];
@@ -71,10 +66,6 @@ function validate(body: Record<string, unknown>): Registration | string {
     name: text(body.name, 120) ?? "",
     email: text(body.email, 254)?.toLowerCase() ?? "",
     phone: text(body.phone, 30) ?? "",
-    street: text(body.street, 200) ?? "",
-    city: text(body.city, 100) ?? "",
-    state: text(body.state, 50) ?? "",
-    zip: text(body.zip, 10) ?? "",
     school: text(body.school, 150) ?? "",
     grade: text(body.grade, 10) ?? "",
     interests: Array.isArray(body.interests)
@@ -88,10 +79,9 @@ function validate(body: Record<string, unknown>): Registration | string {
     accessibility: text(body.accessibility, 1000),
   };
 
-  const required = ["name", "email", "phone", "street", "city", "state", "zip", "school"] as const;
+  const required = ["name", "email", "phone", "school"] as const;
   if (required.some((key) => !r[key])) return "Please fill in all the required fields.";
   if (!EMAIL.test(r.email)) return "Please enter a valid email address.";
-  if (!ZIP.test(r.zip)) return "Please enter a valid ZIP code.";
   if (!(r.grade in GRADES)) return "Please choose your grade.";
   if (is_minor && (!r.parent_name || !r.parent_phone || !r.parent_email)) {
     return "Please add a parent or guardian's name, email, and phone.";

@@ -6,7 +6,7 @@ Status as of November 4, 2026. The site has no domain yet, so Resend can only se
 
 - `register.html` form, the Register buttons in the navbar and home hero, and the form JS
 - Supabase project linked; `registrations` table created with `supabase db push`
-- Database checks passed: the public API can't read or write the table, the data rules are enforced (ZIP, grade, parent required for minors, one registration per email), and no test rows were left behind
+- Database checks passed: the public API can't read or write the table, the data rules are enforced (grade, parent required for minors, one registration per email), and no test rows were left behind
 
 ## 1. Go live without emails
 
@@ -36,12 +36,13 @@ Until a domain is verified, emails to anyone else are refused by Resend. Those r
 - [ ] Add and verify it in Resend at [resend.com/domains](https://resend.com/domains) (SPF/DKIM records)
 - [ ] Change `RESEND_FROM` to an address on the domain, for example `Pathways to Health <register@yourdomain.org>`
 - [ ] Set `ALLOWED_ORIGIN` to the site's address (see step 4)
+- [ ] Make `og:image` a full URL on every page (see J)
 
 No code changes are needed for this step.
 
 ## 4. Hosting and ALLOWED_ORIGIN
 
-- [ ] Until the site has a real address, leave `ALLOWED_ORIGIN` unset (open to any site, `*`)
+- [x] Until the site has a real address, leave `ALLOWED_ORIGIN` unset (open to any site, `*`). It's unset now
 - [ ] Optional: put up a free Cloudflare Pages test site (`*.pages.dev`) and set `ALLOWED_ORIGIN` to that address
 - [ ] When the domain is live, change `ALLOWED_ORIGIN` to the domain
 
@@ -75,7 +76,7 @@ Until a domain is verified in Resend, most attendees won't get a confirmation em
 
 - [x] Built the form on `ask.html` (name, email, optional speaker or topic, question). It posts to the `ask` Edge Function, which saves to the `questions` table (RLS on, no public access, honeypot field). Read questions in the Supabase dashboard: Table Editor → `questions`
 - [x] Question deadline set to January 18, 2027 on `ask.html` and `speakers.html`
-- [ ] Optional: the form still accepts questions after January 18. When the deadline passes, swap the form for a notice saying questions are closed, or extend the date
+- [x] The form closes itself: from January 19 (`data-closes` on the form) it shows a "Questions are closed" notice. To extend the deadline, change `data-closes` and the dates in the text on `ask.html`, `speakers.html` and the FAQ in `about.html`
 
 ### D. No contact information
 
@@ -84,7 +85,7 @@ The site and confirmation email now use a placeholder address, `contact@example.
 - [x] Added it to the footer on every page (as a `mailto:` link)
 - [x] Added it to the confirmation email (replacing "just reply to this email"), as the email's `reply_to`, and to the "already registered" message
 - [ ] **(content)** Pick a contact email. A free Gmail account works for now and can be switched to the domain later.
-- [ ] Replace the placeholder everywhere. Find every spot with `grep -rn "contact@example.com" *.html supabase/functions`: the footer of all seven pages, and `CONTACT_EMAIL` at the top of `supabase/functions/register/index.ts`
+- [ ] Replace the placeholder everywhere. Find every spot with `grep -rn "contact@example.com" *.html supabase/functions`: the footer of all seven pages, the last FAQ answer in `about.html`, and `CONTACT_EMAIL` at the top of `supabase/functions/register/index.ts`
 - [ ] Redeploy the function: `supabase functions deploy register`
 
 ### E. Placeholder speakers
@@ -102,60 +103,42 @@ The site and confirmation email now use a placeholder address, `contact@example.
 
 ### G. Practical details (FAQ)
 
-- [ ] **(content)** Answer these:
-  - Is it free?
-  - Who can attend? High school only, or college students too (the form allows "College")? Is it only for Pensacola High School, or other schools as well?
-  - What time does it end?
-  - Street address, which entrance to use, and where to park
-  - What to bring, and is there a dress code?
-  - Is lunch included? (The schedule says "Catered lunch.")
-  - Can parents attend?
-- [ ] Add a "Questions" section to `about.html` using the info card or `split` layout, one short Q&A per item
+- [x] Added a "Questions, answered" section to `about.html`: who can attend (high school and college students), when and where (with the school's address and a map link), parking (free on campus), dress code (business casual), registering, parents (welcome), questions for speakers, and the contact email
+- [ ] **(content)** Still undecided, so left out of the FAQ: whether it's free, and whether lunch is included (the schedule says "Catered lunch"). Add them to the list in `about.html` once decided
+- [ ] **(content)** Optional: what to bring, and which entrance to use
 
 ### H. Who's behind it
 
 Parents handing over a minor's details will want to know who's running the event.
 
 - [ ] **(content)** List the student organizers (names, roles) and a faculty advisor or sponsoring teacher
-- [ ] Add a "The team" section to `about.html`
+- [ ] Add a "The team" section to `about.html`, after the FAQ, using the same `split` layout
 - [ ] Optional: a sponsors or partners section, if there are any
 
 ### I. Privacy note on registration
 
-The form collects minors' home addresses and phone numbers.
-
-- [ ] **(content)** Decide whether you need the street address. If not, remove `street`, `city`, `state` and `zip` from `register.html`, `validate()` in the function, and the table (with a new migration)
-- [ ] Add a short note above the Register button in `register.html`, for example: "We use your details only to organize the conference and contact you about it. We don't share them. Registrations are deleted after the event."
-- [ ] **(content)** Decide when registrations get deleted, and put a reminder on your calendar for that date
+- [x] Removed the home address (street, city, state, ZIP) from the form, the function and the table (migration `20261104220000_registrations_drop_address.sql`)
+- [x] Added a privacy note above the Register button. It doesn't promise a deletion date
+- [ ] Optional: if you later decide when registrations get deleted, add that to the note and put a reminder on your calendar
 
 ### J. Link previews for social sharing
 
-No page has Open Graph tags, so links shared by text or on social media show up bare.
-
-- [ ] Make a 1200×630 share image (logo + "Pathways to Health" + date) and save it as `images/og.png`
-- [ ] Add to the `<head>` of every page, with that page's title and description:
-  ```html
-  <meta property="og:title" content="Pathways to Health">
-  <meta property="og:description" content="…">
-  <meta property="og:image" content="https://<your-domain>/images/og.png">
-  <meta property="og:type" content="website">
-  <meta name="twitter:card" content="summary_large_image">
-  ```
-  `og:image` needs a full URL, so fill it in once the site has an address
+- [x] Made the share image, `images/og.png` (1200×630: logo, name, tagline, date and school)
+- [x] Added Open Graph and Twitter card tags to every page, with each page's own title and description
+- [ ] When the site has an address, change `og:image` on every page to the full URL, `https://<your-domain>/images/og.png` (marked `PLACEHOLDER`). Most sites won't show the image until then
+- [ ] If the date or venue changes, remake `images/og.png`
 
 ### K. Fuller footer
 
-The footer only links Home and About.
-
-- [ ] Add Speakers, Schedule and Register to `.footer__links` on every page (including `ask.html` and `feedback.html`)
-- [ ] Add the contact email from D
+- [x] The footer links every page, and has the contact email from D
 
 ## Small things
 
 - [x] `speakers.html` has no `<h1>` (done with E)
-- [ ] `about.html:7`: replace the placeholder meta description, e.g. "Pathways to Health is a student-run pre-health conference at Pensacola High School, connecting students with doctors, nurses, researchers, and public health professionals."
-- [ ] `feedback.html`: add `<meta name="robots" content="noindex">` to the `<head>`, and add content (a form, or a link to a Google Form) before sharing the URL
+- [x] `about.html`: real meta description
+- [x] `feedback.html`: added `noindex` and a feedback form (rating, role, what was useful, what to change, optional email). It saves to a `feedback` table through the `feedback` Edge Function, and is read in Table Editor → `feedback`
 - [x] `ask.html`: add a real meta description (done with C)
-- [ ] `schedule.html:47`: use the same venue name as the other pages ("Pensacola High School"), or call it "Pensacola High School Auditorium" everywhere
-- [ ] Unused files are in the repo and would be published: `logo.PNG` (1.5 MB), `pexels-werner-pfennig-6949979.jpg` (2.1 MB), `images/hero-speaker.webp`, `Color and type pairings exploration.pdf`. Move them to a folder outside the site, or `git rm --cached` them and add them to `.gitignore`
-- [ ] `README.md`: change the title from "TEMPLATE — Website Template" to "Pathways to Health"
+- [x] `ask.html`: the form now closes itself on January 19 and shows a "Questions are closed" notice (see C)
+- [x] `schedule.html`: the venue is now "Pensacola High School", like the other pages
+- [x] Unused files (`logo.PNG`, `pexels-werner-pfennig-6949979.jpg`, `images/hero-speaker.webp`, `Color and type pairings exploration.pdf`) are no longer tracked by git and are listed in `.gitignore`. They're still on your disk. `DESIGN.md` still refers to the PDF and `logo.PNG` as sources, so keep a copy somewhere safe
+- [x] `README.md`: title and intro now describe Pathways to Health

@@ -943,11 +943,41 @@ ol {
   margin: var(--space-5) 0 0;
 }
 
+/* About page questions: one per row, divided by hairlines */
+.faq {
+  gap: 0;
+  margin: 0;
+}
+
+.faq > div {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-5) 0;
+  border-top: 1px solid var(--surface-2);
+}
+
+.faq > div:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.faq dd {
+  margin: 0;
+}
+
+/* Links inside an answer stay inline: green text, gold underline */
+.faq a {
+  font-weight: 500;
+  text-decoration: underline 2px var(--accent);
+  text-underline-offset: 4px;
+}
+
 /* ==========================================================================
    Forms (Register and Ask A Question pages) — one column of fieldsets, divided by hairlines
    ========================================================================== */
 .register,
-.register__done {
+.register__done,
+.register__closed {
   max-width: 640px;
 }
 
@@ -1017,10 +1047,6 @@ ol {
   gap: var(--space-5) var(--space-4);
 }
 
-.field-row--address {
-  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr);
-}
-
 textarea.input {
   min-height: 88px;
   resize: vertical;
@@ -1079,6 +1105,11 @@ select.input {
   border-top: 1px solid var(--surface-2);
 }
 
+.register__privacy {
+  max-width: 64ch;
+  opacity: 0.75;
+}
+
 .register__status:empty {
   display: none;
 }
@@ -1087,7 +1118,8 @@ select.input {
   font-weight: 500;
 }
 
-.register__done[hidden] {
+.register__done[hidden],
+.register__closed[hidden] {
   display: none;
 }
 
@@ -1100,8 +1132,7 @@ select.input {
 }
 
 @media (max-width: 767px) {
-  .field-row,
-  .field-row--address {
+  .field-row {
     grid-template-columns: minmax(0, 1fr);
   }
 

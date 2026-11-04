@@ -1,6 +1,6 @@
-# TEMPLATE — Website Template
+# Pathways to Health
 
-A minimal, black and white website template: plain HTML, CSS, and a little vanilla JS. No build step. Open `index.html` in a browser and it works.
+The website for Pathways to Health, a student-run pre-health conference at Pensacola High School. Plain HTML, CSS, and a little vanilla JS. No build step. Open `index.html` in a browser and it works.
 
 ## Structure
 
@@ -11,10 +11,10 @@ speakers.html    Speakers page
 register.html    Registration form (green "Register" button in the navbar and home hero)
 schedule.html    Schedule page
 ask.html         Ask A Question form: questions for speakers (linked from the Speakers page and footer)
-feedback.html    Feedback page (UNLINKED — see below)
+feedback.html    Feedback form for after the event (UNLINKED — see below)
 css/styles.css   All styles (design tokens at the top)
 js/main.js       Mobile menu, header scroll border, registration form, hero paths, countdown, footer year
-supabase/        Form backend: database migrations and the "register" and "ask" Edge Functions
+supabase/        Form backend: database migrations and the "register", "ask" and "feedback" Edge Functions
 ```
 
 ## Customizing
@@ -26,7 +26,7 @@ supabase/        Form backend: database migrations and the "register" and "ask" 
 
 ## Unlinked pages — don't forget these
 
-- **`feedback.html` is intentionally not linked from anywhere** (not the navbar, footer, or any page). It is only reachable by typing the URL directly, e.g. `https://<your-domain>/feedback.html`. Share that URL directly (QR code, email, slides) when collecting feedback. Search engines may still find it; add `<meta name="robots" content="noindex">` to its `<head>` if it should stay out of search results.
+- **`feedback.html` is intentionally not linked from anywhere** (not the navbar, footer, or any page). It is only reachable by typing the URL directly, e.g. `https://<your-domain>/feedback.html`. Share that URL directly (QR code, email, slides) when collecting feedback. It has `<meta name="robots" content="noindex">`, so search engines should leave it out of results.
 - **`ask.html` is not in the navbar.** It is reached through the "Submit a question" button on the Speakers page and the footer.
 - These pages still carry the full navbar so visitors can get back to the rest of the site. When you edit the navbar across pages, edit it in these files too.
 
@@ -67,5 +67,18 @@ Each email address can register once. A second attempt gets "This email is alrea
 
 The form on `ask.html` works the same way: it posts to the `ask` Edge Function (`supabase/functions/ask`), which checks the data and saves it to the `questions` table. It sends no email. The table is locked down like `registrations`, so read questions in the Supabase dashboard (Table Editor → `questions`). Deploy it with `supabase functions deploy ask`; it uses the same `ALLOWED_ORIGIN` secret, and the form's `data-endpoint` ends in `/functions/v1/ask`.
 
-The contact email is a placeholder, `contact@example.com`, until a real one is chosen. It's in every page's footer and in `CONTACT_EMAIL` at the top of `supabase/functions/register/index.ts`.
+The form closes itself: from the date in its `data-closes` attribute (the day after the deadline), the page shows a "Questions are closed" notice instead.
+
+The contact email is a placeholder, `contact@example.com`, until a real one is chosen. It's in every page's footer, the last question in the About page's FAQ, and `CONTACT_EMAIL` at the top of `supabase/functions/register/index.ts`. Find them all with `grep -rn "contact@example.com" *.html supabase/functions`.
+
+### Feedback
+
+`feedback.html` posts to the `feedback` Edge Function, which saves to the `feedback` table (read it in Table Editor → `feedback`). Only the rating is required; the email is optional, for people who want a reply. Deploy it with `supabase functions deploy feedback`.
+
+## Link previews
+
+Every page has Open Graph tags, so shared links show a title, description and `images/og.png`. Two things to keep up to date:
+
+- `og:image` must be a full URL to work on most sites. Once the site has an address, change `content="images/og.png"` to `content="https://<your-domain>/images/og.png"` on every page.
+- `images/og.png` has the date and school in it. If either changes, make a new 1200×630 image.
 
