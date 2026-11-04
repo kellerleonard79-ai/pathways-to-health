@@ -1087,9 +1087,10 @@ ol {
    Speakers page — portrait cards in a grid, then the question CTA
    ========================================================================== */
 .speakers {
+  --speakers-row-gap: var(--space-8);
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-8) var(--space-6);
+  gap: var(--speakers-row-gap) var(--space-6);
 }
 
 .speaker {
@@ -1168,8 +1169,8 @@ ol {
 
 @media (max-width: 767px) {
   .speakers {
+    --speakers-row-gap: var(--space-7);
     grid-template-columns: 1fr;
-    gap: var(--space-7);
   }
 }
 
@@ -1232,8 +1233,8 @@ ol {
    on every device. Each section fills the screen below the sticky header
    (scroll-padding keeps the header from covering a section's top), with its
    content centered. snap-stop means a hard swipe can't skip a stop.
-   Sections taller than the screen (the speaker grid) scroll
-   freely inside, then the next one snaps in.
+   Sections taller than the screen scroll freely inside, then the next one
+   snaps in. The speaker grid stops at each row of speakers instead.
    ========================================================================== */
 html.snap-sections {
   /* The header's full height, counting its 1px bottom border */
@@ -1275,6 +1276,38 @@ html.snap-sections {
 
 .snap-sections .site-footer {
   scroll-snap-align: end;
+}
+
+/* Each row of speakers is a stop, with one row gap of space under the
+   header. The first row keeps the section's top padding instead, so it
+   lands on the section's own stop rather than adding a second stop just
+   below it. The first row is 3 cards, then 2, then 1 as the grid narrows.
+   The section itself stops being a snap target: it's taller than the
+   screen, which would let the scroll rest anywhere inside it. */
+.snap-sections main > .section:has(.speakers) {
+  scroll-snap-align: none;
+}
+
+.snap-sections .speakers > li {
+  scroll-margin-top: var(--speakers-row-gap);
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.snap-sections .speakers > li:nth-child(-n + 3) {
+  scroll-margin-top: var(--section-space);
+}
+
+@media (max-width: 1023px) {
+  .snap-sections .speakers > li:nth-child(3) {
+    scroll-margin-top: var(--speakers-row-gap);
+  }
+}
+
+@media (max-width: 767px) {
+  .snap-sections .speakers > li:nth-child(2) {
+    scroll-margin-top: var(--speakers-row-gap);
+  }
 }
 
 /* ==========================================================================
