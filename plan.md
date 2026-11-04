@@ -48,3 +48,127 @@ No code changes are needed for this step.
 ## Later, if needed
 
 - If spam registrations show up, add Cloudflare Turnstile (a free bot check). Right now the hidden bot field and the one-registration-per-email rule are the only protection.
+
+---
+
+# Site review: fixes and additions
+
+From a full review of the site on November 4, 2026. Work through these in any order; tick them off as they're done. Items marked **(content)** need information only you have: names, dates, decisions.
+
+## Before launch
+
+### A. Registration only pretends to submit
+
+The form's `data-endpoint` is empty (`register.html:17`), so it shows "You're registered" without saving anything. Don't share the site publicly until this is fixed.
+
+- [ ] Finish "1. Go live without emails" above
+
+### B. Don't promise emails that aren't sent
+
+Until a domain is verified in Resend, most attendees won't get a confirmation email.
+
+- [ ] Success panel (`register.html:180`): covered in step 1 above
+- [ ] Duplicate-email error (`supabase/functions/register/index.ts:215`): drop "Check your inbox for the confirmation", or only say it once emails are going out. For example: "This email is already registered. If you need to change anything, contact us at …"
+- [ ] Redeploy the function: `supabase functions deploy register`
+
+### C. Ask A Question page is empty
+
+`speakers.html` links to `ask.html`, which only has a heading. Pick one:
+
+- [ ] **Build it:** a short form (name, email, optional speaker or topic, question) that posts to a new Edge Function and a `questions` table, set up like `registrations` (RLS on, no public access, honeypot field)
+- [ ] **Or hide it for now:** remove the "Have a question for a speaker?" section from `speakers.html` until the form exists
+
+Either way:
+
+- [ ] **(content)** Choose a question deadline before the conference, for example January 25, 2027, so questions can reach speakers in time. Update `speakers.html:135`.
+
+### D. No contact information
+
+No email address appears anywhere on the site, and "just reply to this email" in the confirmation won't work from `onboarding@resend.dev`.
+
+- [ ] **(content)** Pick a contact email. A free Gmail account works for now and can be switched to the domain later.
+- [ ] Add it to the footer on every page (as a `mailto:` link)
+- [ ] Add it to the confirmation email in `supabase/functions/register/index.ts`, replacing "just reply to this email" (both the text and HTML versions), then redeploy
+- [ ] When the domain is live, set a `reply_to` on the Resend email so replies reach that address
+
+### E. Placeholder speakers
+
+All six cards on `speakers.html` say "Speaker Name", "Position / Title".
+
+- [ ] **(content)** Fill in each speaker's name, title, employer, bio, tag (Keynote / Panel / Breakout) and field
+- [ ] Add photos as `images/speakers/<name>.webp` (4:5, about 800×1000) using the `<img>` snippet in the comment at the top of the list
+- [ ] Until speakers are confirmed, replace the grid with a notice (Cream panel with a gold dot, see `DESIGN.md` → Notice), e.g. "Speakers will be announced in December."
+
+### F. Confirm the date
+
+February 1, 2027 is a **Monday**, a school day.
+
+- [ ] **(content)** Confirm the date is right
+- [ ] If it changes, update every place it appears:
+  - `index.html:91` (hero) and `index.html:97` (`data-countdown`)
+  - `register.html:7` (meta description), `register.html:47` (header), `register.html:180` (success panel)
+  - `speakers.html:135` (question deadline)
+  - `supabase/functions/register/index.ts:119` and `:134` (confirmation email), then redeploy
+- [ ] Once the date is settled, also use the full date on `index.html:115` and `schedule.html:7` and `:47`, which say only "February 2027"
+
+## Worth adding
+
+### G. Practical details (FAQ)
+
+- [ ] **(content)** Answer these:
+  - Is it free?
+  - Who can attend? High school only, or college students too (the form allows "College")? Is it only for Pensacola High School, or other schools as well?
+  - What time does it end?
+  - Street address, which entrance to use, and where to park
+  - What to bring, and is there a dress code?
+  - Is lunch included? (The schedule says "Catered lunch.")
+  - Can parents attend?
+- [ ] Add a "Questions" section to `about.html` using the info card or `split` layout, one short Q&A per item
+
+### H. Who's behind it
+
+Parents handing over a minor's details will want to know who's running the event.
+
+- [ ] **(content)** List the student organizers (names, roles) and a faculty advisor or sponsoring teacher
+- [ ] Add a "The team" section to `about.html`
+- [ ] Optional: a sponsors or partners section, if there are any
+
+### I. Privacy note on registration
+
+The form collects minors' home addresses and phone numbers.
+
+- [ ] **(content)** Decide whether you need the street address. If not, remove `street`, `city`, `state` and `zip` from `register.html`, `validate()` in the function, and the table (with a new migration)
+- [ ] Add a short note above the Register button in `register.html`, for example: "We use your details only to organize the conference and contact you about it. We don't share them. Registrations are deleted after the event."
+- [ ] **(content)** Decide when registrations get deleted, and put a reminder on your calendar for that date
+
+### J. Link previews for social sharing
+
+No page has Open Graph tags, so links shared by text or on social media show up bare.
+
+- [ ] Make a 1200×630 share image (logo + "Pathways to Health" + date) and save it as `images/og.png`
+- [ ] Add to the `<head>` of every page, with that page's title and description:
+  ```html
+  <meta property="og:title" content="Pathways to Health">
+  <meta property="og:description" content="…">
+  <meta property="og:image" content="https://<your-domain>/images/og.png">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  ```
+  `og:image` needs a full URL, so fill it in once the site has an address
+
+### K. Fuller footer
+
+The footer only links Home and About.
+
+- [ ] Add Speakers, Schedule and Register to `.footer__links` on every page (including `ask.html` and `feedback.html`)
+- [ ] Add the contact email from D
+
+## Small things
+
+- [ ] `speakers.html` has no `<h1>`. Add a page header like the Schedule page's (`eyebrow`, `h1.display` "Speakers", dot rule) above the grid
+- [ ] `about.html:7`: replace the placeholder meta description, e.g. "Pathways to Health is a student-run pre-health conference at Pensacola High School, connecting students with doctors, nurses, researchers, and public health professionals."
+- [ ] `feedback.html`: add `<meta name="robots" content="noindex">` to the `<head>`, and add content (a form, or a link to a Google Form) before sharing the URL
+- [ ] `ask.html`: add a real meta description once the page has content
+- [ ] `schedule.html:47`: use the same venue name as the other pages ("Pensacola High School"), or call it "Pensacola High School Auditorium" everywhere
+- [ ] Unused files are in the repo and would be published: `logo.PNG` (1.5 MB), `pexels-werner-pfennig-6949979.jpg` (2.1 MB), `images/hero-speaker.webp`, `Color and type pairings exploration.pdf`. Move them to a folder outside the site, or `git rm --cached` them and add them to `.gitignore`
+- [ ] `README.md`: change the title from "TEMPLATE — Website Template" to "Pathways to Health"
