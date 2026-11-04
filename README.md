@@ -10,11 +10,11 @@ about.html       About page
 speakers.html    Speakers page
 register.html    Registration form (green "Register" button in the navbar and home hero)
 schedule.html    Schedule page
-ask.html         Ask A Question page (linked from the Speakers page only)
+ask.html         Ask A Question form: questions for speakers (linked from the Speakers page and footer)
 feedback.html    Feedback page (UNLINKED — see below)
 css/styles.css   All styles (design tokens at the top)
 js/main.js       Mobile menu, header scroll border, registration form, hero paths, countdown, footer year
-supabase/        Registration backend: database migration and the "register" Edge Function
+supabase/        Form backend: database migrations and the "register" and "ask" Edge Functions
 ```
 
 ## Customizing
@@ -27,7 +27,7 @@ supabase/        Registration backend: database migration and the "register" Edg
 ## Unlinked pages — don't forget these
 
 - **`feedback.html` is intentionally not linked from anywhere** (not the navbar, footer, or any page). It is only reachable by typing the URL directly, e.g. `https://<your-domain>/feedback.html`. Share that URL directly (QR code, email, slides) when collecting feedback. Search engines may still find it; add `<meta name="robots" content="noindex">` to its `<head>` if it should stay out of search results.
-- **`ask.html` is not in the navbar.** It is reached through the "Ask A Question" link on the Speakers page. If that link is removed, the page becomes unlinked too.
+- **`ask.html` is not in the navbar.** It is reached through the "Submit a question" button on the Speakers page and the footer.
 - These pages still carry the full navbar so visitors can get back to the rest of the site. When you edit the navbar across pages, edit it in these files too.
 
 ## Adding a page
@@ -62,4 +62,10 @@ One-time setup (Supabase CLI v2; CLI v3 will ask you to confirm each command tha
 To test without spamming real inboxes, register with `delivered@resend.dev`. To see sent mail and any failures, check [resend.com/emails](https://resend.com/emails) and the function's logs in the Supabase dashboard (Edge Functions → register → Logs).
 
 Each email address can register once. A second attempt gets "This email is already registered."
+
+### Questions for speakers
+
+The form on `ask.html` works the same way: it posts to the `ask` Edge Function (`supabase/functions/ask`), which checks the data and saves it to the `questions` table. It sends no email. The table is locked down like `registrations`, so read questions in the Supabase dashboard (Table Editor → `questions`). Deploy it with `supabase functions deploy ask`; it uses the same `ALLOWED_ORIGIN` secret, and the form's `data-endpoint` ends in `/functions/v1/ask`.
+
+The contact email is a placeholder, `contact@example.com`, until a real one is chosen. It's in every page's footer and in `CONTACT_EMAIL` at the top of `supabase/functions/register/index.ts`.
 

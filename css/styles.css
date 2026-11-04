@@ -944,7 +944,7 @@ ol {
 }
 
 /* ==========================================================================
-   Register page — one column of fieldsets, divided by hairlines
+   Forms (Register and Ask A Question pages) — one column of fieldsets, divided by hairlines
    ========================================================================== */
 .register,
 .register__done {
@@ -1004,6 +1004,11 @@ ol {
 .field__hint {
   margin-top: calc(var(--space-2) - var(--space-5));
   opacity: 0.75;
+}
+
+/* Under a field's input, where the gap is already small */
+.field .field__hint {
+  margin-top: 0;
 }
 
 .field-row {
@@ -1286,6 +1291,12 @@ select.input {
 .speaker__bio {
   max-width: 64ch;
   margin-top: var(--space-1);
+}
+
+/* Shown in the page header until speakers are announced */
+.speakers-soon {
+  max-width: 64ch;
+  margin-top: var(--space-7);
 }
 
 .speakers-cta .h1,

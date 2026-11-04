@@ -42,14 +42,15 @@
     window.addEventListener("scroll", onScroll, { passive: true });
   }
 
-  // Registration form
-  const register = document.querySelector(".register");
+  // Forms: registration (register.html) and questions for speakers (ask.html).
+  // Both share the .register styles; the parent fields are registration only.
+  const form = document.querySelector(".register");
 
-  if (register) {
-    const button = register.querySelector("button[type=submit]");
-    const status = register.querySelector(".register__status");
-    const minorToggle = register.querySelector("[data-minor-toggle]");
-    const parent = register.querySelector(".register__parent");
+  if (form) {
+    const button = form.querySelector("button[type=submit]");
+    const status = form.querySelector(".register__status");
+    const minorToggle = form.querySelector("[data-minor-toggle]");
+    const parent = form.querySelector(".register__parent");
     const done = document.querySelector(".register__done");
 
     function setStatus(message, isError) {
@@ -76,14 +77,14 @@
     }
 
     // Once a field has been flagged, clear the flag as soon as it's fixed
-    register.addEventListener("input", (e) => {
+    form.addEventListener("input", (e) => {
       if (e.target.getAttribute("aria-invalid") === "true") markField(e.target);
     });
 
-    register.addEventListener("submit", async (e) => {
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      const fields = [...register.querySelectorAll("input, select, textarea")].filter(
+      const fields = [...form.querySelectorAll("input, select, textarea")].filter(
         (field) => !field.disabled && field.name !== "company"
       );
       fields.forEach(markField);
@@ -95,12 +96,12 @@
         return;
       }
 
-      const data = new FormData(register);
+      const data = new FormData(form);
       const payload = Object.fromEntries(data);
-      payload.interests = data.getAll("interests");
-      payload.is_minor = data.has("is_minor");
+      if (form.elements.interests) payload.interests = data.getAll("interests");
+      if (minorToggle) payload.is_minor = data.has("is_minor");
 
-      const endpoint = register.dataset.endpoint;
+      const endpoint = form.dataset.endpoint;
       button.disabled = true;
       setStatus("Sending…", false);
 
@@ -112,7 +113,7 @@
             headers: {
               "Content-Type": "application/json",
               Accept: "application/json",
-              apikey: register.dataset.key,
+              apikey: form.dataset.key,
             },
             body: JSON.stringify(payload),
           });
@@ -124,9 +125,11 @@
           const body = await res.json().catch(() => ({}));
           emailed = body.emailed === true;
         }
-        done.querySelector("[data-done-email]").textContent = payload.email;
-        done.querySelector("[data-done-emailed]").hidden = !emailed;
-        register.hidden = true;
+        const doneEmail = done.querySelector("[data-done-email]");
+        const doneEmailed = done.querySelector("[data-done-emailed]");
+        if (doneEmail) doneEmail.textContent = payload.email;
+        if (doneEmailed) doneEmailed.hidden = !emailed;
+        form.hidden = true;
         done.hidden = false;
         done.focus();
       } catch (err) {

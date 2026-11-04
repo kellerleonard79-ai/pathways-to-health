@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" class="snap-sections">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ask A Question — Pathways to Health</title>
-  <meta name="description" content="Ask A Question — Pathways to Health.">
+  <meta name="description" content="Send a question to the speakers at Pathways to Health before the conference on February 6, 2027.">
   <link rel="icon" type="image/png" href="images/favicon-32.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,7 +41,65 @@
   <main id="main">
     <section class="page-header">
       <div class="container">
+        <span class="eyebrow">Before the conference</span>
         <h1 class="display">Ask A Question</h1>
+        <div class="dot-rule" aria-hidden="true"></div>
+        <p class="page-header__details"><span>Questions due <time datetime="2027-01-18">January 18, 2027</time></span></p>
+      </div>
+    </section>
+
+    <section class="section section--flush">
+      <div class="container">
+        <!-- Questions for speakers. Posts to the Supabase "ask" Edge Function, set up
+             like the registration form; see README, "Registration backend". -->
+        <form class="register" data-endpoint="https://qsozyqnofuchttyigqhp.supabase.co/functions/v1/ask" data-key="sb_publishable_E7BUFubj4NgjQLLe2GDYeg_RGMzfdkv" novalidate>
+          <p class="register__intro small">Send in a question by January 18 and we'll pass it on to the speakers ahead of the panels and Q&amp;A. Fields marked * are required.</p>
+
+          <fieldset class="register__group">
+            <legend class="h2">About you</legend>
+            <div class="field-row">
+              <div class="field">
+                <label for="ask-name">Name <span class="field__req" aria-hidden="true">*</span></label>
+                <input class="input" id="ask-name" name="name" type="text" autocomplete="name" maxlength="120" required>
+              </div>
+              <div class="field">
+                <label for="ask-email">Email <span class="field__req" aria-hidden="true">*</span></label>
+                <input class="input" id="ask-email" name="email" type="email" autocomplete="email" maxlength="254" placeholder="you@example.com" required>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="register__group">
+            <legend class="h2">Your question</legend>
+            <div class="field">
+              <label for="ask-speaker">Speaker or topic</label>
+              <input class="input" id="ask-speaker" name="speaker" type="text" maxlength="150" aria-describedby="ask-speaker-hint">
+              <p class="field__hint small" id="ask-speaker-hint">A speaker's name or a career, like nursing. Leave it blank if the question is for anyone.</p>
+            </div>
+            <div class="field">
+              <label for="ask-question">Question <span class="field__req" aria-hidden="true">*</span></label>
+              <textarea class="input" id="ask-question" name="question" rows="5" maxlength="2000" required></textarea>
+            </div>
+          </fieldset>
+
+          <!-- Honeypot: hidden from people, filled in by bots. The server ignores any submission that has it. -->
+          <div class="register__trap" aria-hidden="true">
+            <label for="ask-company">Company</label>
+            <input id="ask-company" name="company" type="text" tabindex="-1" autocomplete="off">
+          </div>
+
+          <div class="register__submit">
+            <button class="btn btn--primary btn--lg" type="submit">Send question</button>
+            <p class="register__status small" role="status"></p>
+          </div>
+        </form>
+
+        <div class="register__done notice" tabindex="-1" hidden>
+          <div>
+            <h2 class="h2">Thanks, we've got your question.</h2>
+            <p>We'll pass it on to the speakers before the conference on February 6.</p>
+          </div>
+        </div>
       </div>
     </section>
   </main>
@@ -63,6 +121,8 @@
       </div>
       <div class="footer__bottom">
         <p>© <span data-year>2026</span> Pathways to Health</p>
+        <!-- PLACEHOLDER: replace contact@example.com with the real contact email, here and in every file (see plan.md, D) -->
+        <p><a class="link" href="mailto:contact@example.com">contact@example.com</a></p>
       </div>
     </div>
   </footer>

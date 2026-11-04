@@ -28,6 +28,9 @@ const INTERESTS = [
   "Not sure yet",
 ];
 
+// PLACEHOLDER: the organizers' contact email, also in every page's footer (see plan.md, D)
+const CONTACT_EMAIL = "contact@example.com";
+
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const ZIP = /^\d{5}(-\d{4})?$/;
 
@@ -116,11 +119,11 @@ function confirmationEmail(r: Registration) {
   const text = [
     `Hi ${first},`,
     "",
-    "You're registered for Pathways to Health on February 1, 2027 at Pensacola High School.",
+    "You're registered for Pathways to Health on February 6, 2027 at Pensacola High School.",
     "",
     ...rows.map(([label, value]) => `${label}: ${value}`),
     "",
-    "If anything here is wrong, just reply to this email.",
+    `If anything here is wrong, email us at ${CONTACT_EMAIL}.`,
     "",
     "Pathways to Health",
   ].join("\n");
@@ -131,7 +134,7 @@ function confirmationEmail(r: Registration) {
   <div style="max-width:560px;margin:0 auto">
     <h1 style="margin:0 0 16px;font-family:"Instrument Serif",serif;font-weight:400;font-size:32px;line-height:1.1">You're registered.</h1>
     <p style="margin:0 0 16px">Hi ${escapeHtml(first)},</p>
-    <p style="margin:0 0 24px">See you at <strong>Pathways to Health</strong> on <strong>February 1, 2027</strong> at Pensacola High School.</p>
+    <p style="margin:0 0 24px">See you at <strong>Pathways to Health</strong> on <strong>February 6, 2027</strong> at Pensacola High School.</p>
     <table role="presentation" style="width:100%;border-collapse:collapse;margin:0 0 24px">
       ${rows
         .map(
@@ -140,7 +143,7 @@ function confirmationEmail(r: Registration) {
         )
         .join("\n      ")}
     </table>
-    <p style="margin:0 0 24px">If anything here is wrong, just reply to this email.</p>
+    <p style="margin:0 0 24px">If anything here is wrong, email us at <a href="mailto:${CONTACT_EMAIL}" style="color:#084021">${CONTACT_EMAIL}</a>.</p>
     <p style="margin:0;font-size:13px">Pathways to Health</p>
   </div>
 </body>
@@ -169,6 +172,7 @@ async function sendConfirmation(id: string, r: Registration): Promise<boolean> {
       body: JSON.stringify({
         from,
         to: [r.email],
+        reply_to: CONTACT_EMAIL,
         cc: r.parent_email && r.parent_email !== r.email ? [r.parent_email] : undefined,
         ...confirmationEmail(r),
       }),
@@ -219,7 +223,7 @@ export default {
 
       if (dbError) {
         if (dbError.code === "23505") {
-          return error(409, "This email is already registered.");
+          return error(409, `This email is already registered. To change your registration, email us at ${CONTACT_EMAIL}.`);
         }
         console.error("Insert failed:", dbError);
         return error(500, "Something went wrong. Please try again.");

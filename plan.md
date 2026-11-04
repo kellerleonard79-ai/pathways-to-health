@@ -73,43 +73,30 @@ Until a domain is verified in Resend, most attendees won't get a confirmation em
 
 ### C. Ask A Question page is empty
 
-`speakers.html` links to `ask.html`, which only has a heading. Pick one:
-
-- [ ] **Build it:** a short form (name, email, optional speaker or topic, question) that posts to a new Edge Function and a `questions` table, set up like `registrations` (RLS on, no public access, honeypot field)
-- [ ] **Or hide it for now:** remove the "Have a question for a speaker?" section from `speakers.html` until the form exists
-
-Either way:
-
-- [ ] **(content)** Choose a question deadline before the conference, for example January 25, 2027, so questions can reach speakers in time. Update `speakers.html:135`.
+- [x] Built the form on `ask.html` (name, email, optional speaker or topic, question). It posts to the `ask` Edge Function, which saves to the `questions` table (RLS on, no public access, honeypot field). Read questions in the Supabase dashboard: Table Editor → `questions`
+- [x] Question deadline set to January 18, 2027 on `ask.html` and `speakers.html`
+- [ ] Optional: the form still accepts questions after January 18. When the deadline passes, swap the form for a notice saying questions are closed, or extend the date
 
 ### D. No contact information
 
-No email address appears anywhere on the site, and "just reply to this email" in the confirmation won't work from `onboarding@resend.dev`.
+The site and confirmation email now use a placeholder address, `contact@example.com`, marked with a `PLACEHOLDER` comment everywhere it appears.
 
+- [x] Added it to the footer on every page (as a `mailto:` link)
+- [x] Added it to the confirmation email (replacing "just reply to this email"), as the email's `reply_to`, and to the "already registered" message
 - [ ] **(content)** Pick a contact email. A free Gmail account works for now and can be switched to the domain later.
-- [ ] Add it to the footer on every page (as a `mailto:` link)
-- [ ] Add it to the confirmation email in `supabase/functions/register/index.ts`, replacing "just reply to this email" (both the text and HTML versions), then redeploy
-- [ ] When the domain is live, set a `reply_to` on the Resend email so replies reach that address
+- [ ] Replace the placeholder everywhere. Find every spot with `grep -rn "contact@example.com" *.html supabase/functions`: the footer of all seven pages, and `CONTACT_EMAIL` at the top of `supabase/functions/register/index.ts`
+- [ ] Redeploy the function: `supabase functions deploy register`
 
 ### E. Placeholder speakers
 
-All six cards on `speakers.html` say "Speaker Name", "Position / Title".
-
-- [ ] **(content)** Fill in each speaker's name, title, employer, bio, tag (Keynote / Panel / Breakout) and field
-- [ ] Add photos as `images/speakers/<name>.webp` (4:5, about 800×1000) using the `<img>` snippet in the comment at the top of the list
-- [ ] Until speakers are confirmed, replace the grid with a notice (Cream panel with a gold dot, see `DESIGN.md` → Notice), e.g. "Speakers will be announced in December."
+- [x] Replaced the six placeholder cards with a "confirming our speakers" notice in the page header. The Speakers page now has a proper page header (`h1`, dot rule, date and place)
+- [ ] **(content)** Gather each speaker's name, title, employer, bio, tag (Keynote / Panel / Breakout) and field
+- [ ] Add photos as `images/speakers/<name>.webp` (4:5, about 800×1000)
+- [ ] When speakers are confirmed: un-comment the speakers grid in `speakers.html` (the commented-out section after the page header), make one `<li>` per speaker, and remove the notice
 
 ### F. Confirm the date
 
-February 1, 2027 is a **Monday**, a school day.
-
-- [ ] **(content)** Confirm the date is right
-- [ ] If it changes, update every place it appears:
-  - `index.html:91` (hero) and `index.html:97` (`data-countdown`)
-  - `register.html:7` (meta description), `register.html:47` (header), `register.html:180` (success panel)
-  - `speakers.html:135` (question deadline)
-  - `supabase/functions/register/index.ts:119` and `:134` (confirmation email), then redeploy
-- [ ] Once the date is settled, also use the full date on `index.html:115` and `schedule.html:7` and `:47`, which say only "February 2027"
+- [x] The date is **Saturday, February 6, 2027**. Updated everywhere: the home hero, countdown, "What we do" section and "Save your seat" section, the register page, the Schedule page header and description, and the confirmation email (redeployed)
 
 ## Worth adding
 
@@ -165,10 +152,10 @@ The footer only links Home and About.
 
 ## Small things
 
-- [ ] `speakers.html` has no `<h1>`. Add a page header like the Schedule page's (`eyebrow`, `h1.display` "Speakers", dot rule) above the grid
+- [x] `speakers.html` has no `<h1>` (done with E)
 - [ ] `about.html:7`: replace the placeholder meta description, e.g. "Pathways to Health is a student-run pre-health conference at Pensacola High School, connecting students with doctors, nurses, researchers, and public health professionals."
 - [ ] `feedback.html`: add `<meta name="robots" content="noindex">` to the `<head>`, and add content (a form, or a link to a Google Form) before sharing the URL
-- [ ] `ask.html`: add a real meta description once the page has content
+- [x] `ask.html`: add a real meta description (done with C)
 - [ ] `schedule.html:47`: use the same venue name as the other pages ("Pensacola High School"), or call it "Pensacola High School Auditorium" everywhere
 - [ ] Unused files are in the repo and would be published: `logo.PNG` (1.5 MB), `pexels-werner-pfennig-6949979.jpg` (2.1 MB), `images/hero-speaker.webp`, `Color and type pairings exploration.pdf`. Move them to a folder outside the site, or `git rm --cached` them and add them to `.gitignore`
 - [ ] `README.md`: change the title from "TEMPLATE — Website Template" to "Pathways to Health"

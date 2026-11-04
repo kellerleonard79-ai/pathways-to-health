@@ -39,100 +39,49 @@
   </header>
 
   <main id="main">
-    <section class="section" aria-label="Speakers">
+    <section class="page-header">
       <div class="container">
-        <!-- One card per speaker. Tag: tag--filled = Keynote, tag--outline = Panel, tag--soft = Breakout.
-             To add a photo, swap the .speaker__photo div for:
-             <img class="speaker__photo" src="images/speakers/name.webp" alt="Portrait of Name" width="800" height="1000" loading="lazy"> -->
+        <span class="eyebrow">Pathways to Health</span>
+        <h1 class="display">Speakers</h1>
+        <div class="dot-rule" aria-hidden="true"></div>
+        <p class="page-header__details"><time datetime="2027-02-06">February 6, 2027</time><span>Pensacola High School</span></p>
+        <!-- Remove this notice once the speakers grid below is added back -->
+        <div class="notice speakers-soon">
+          <p>We're confirming our speakers now: doctors, nurses, researchers, and public health professionals. Check back soon for the lineup.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Speakers grid: add it back here once speakers are confirmed, with one <li> per speaker.
+         Tag: tag--filled = Keynote, tag--outline = Panel, tag--soft = Breakout. The eyebrow is the speaker's field.
+         Until a photo arrives, use <div class="speaker__photo" role="img" aria-label="Speaker photo coming soon">Photo</div>.
+
+    <section class="section" aria-label="Speaker list">
+      <div class="container">
         <ul class="speakers">
           <li>
-            <!-- Placeholder speaker: replace name, title, employer and bio -->
             <article class="speaker">
-              <div class="speaker__photo" role="img" aria-label="Speaker photo coming soon">Photo</div>
+              <img class="speaker__photo" src="images/speakers/name.webp" alt="Portrait of Name" width="800" height="1000" loading="lazy">
               <div class="speaker__meta">
                 <span class="tag tag--filled">Keynote</span>
                 <span class="eyebrow">Medicine</span>
               </div>
               <h2 class="speaker__name">Speaker Name</h2>
               <p class="speaker__role">Position / Title<span>Place of Employment</span></p>
-              <p class="speaker__bio">A short bio goes here: two or three sentences on the speaker's background and current work. Mention how they got into medicine and what they'll be talking about on the day.</p>
-            </article>
-          </li>
-          <li>
-            <!-- Placeholder speaker: replace name, title, employer and bio -->
-            <article class="speaker">
-              <div class="speaker__photo" role="img" aria-label="Speaker photo coming soon">Photo</div>
-              <div class="speaker__meta">
-                <span class="tag tag--filled">Keynote</span>
-                <span class="eyebrow">Nursing</span>
-              </div>
-              <h2 class="speaker__name">Speaker Name</h2>
-              <p class="speaker__role">Position / Title<span>Place of Employment</span></p>
-              <p class="speaker__bio">A short bio goes here: two or three sentences on the speaker's background and current work. Mention how they got into nursing and what they'll be talking about on the day.</p>
-            </article>
-          </li>
-          <li>
-            <!-- Placeholder speaker: replace name, title, employer and bio -->
-            <article class="speaker">
-              <div class="speaker__photo" role="img" aria-label="Speaker photo coming soon">Photo</div>
-              <div class="speaker__meta">
-                <span class="tag tag--outline">Panel</span>
-                <span class="eyebrow">Public Health</span>
-              </div>
-              <h2 class="speaker__name">Speaker Name</h2>
-              <p class="speaker__role">Position / Title<span>Place of Employment</span></p>
-              <p class="speaker__bio">A short bio goes here: two or three sentences on the speaker's background and current work. Mention how they got into public health and what they'll be talking about on the day.</p>
-            </article>
-          </li>
-          <li>
-            <!-- Placeholder speaker: replace name, title, employer and bio -->
-            <article class="speaker">
-              <div class="speaker__photo" role="img" aria-label="Speaker photo coming soon">Photo</div>
-              <div class="speaker__meta">
-                <span class="tag tag--outline">Panel</span>
-                <span class="eyebrow">Research</span>
-              </div>
-              <h2 class="speaker__name">Speaker Name</h2>
-              <p class="speaker__role">Position / Title<span>Place of Employment</span></p>
-              <p class="speaker__bio">A short bio goes here: two or three sentences on the speaker's background and current work. Mention how they got into research and what they'll be talking about on the day.</p>
-            </article>
-          </li>
-          <li>
-            <!-- Placeholder speaker: replace name, title, employer and bio -->
-            <article class="speaker">
-              <div class="speaker__photo" role="img" aria-label="Speaker photo coming soon">Photo</div>
-              <div class="speaker__meta">
-                <span class="tag tag--outline">Panel</span>
-                <span class="eyebrow">Pharmacy</span>
-              </div>
-              <h2 class="speaker__name">Speaker Name</h2>
-              <p class="speaker__role">Position / Title<span>Place of Employment</span></p>
-              <p class="speaker__bio">A short bio goes here: two or three sentences on the speaker's background and current work. Mention how they got into pharmacy and what they'll be talking about on the day.</p>
-            </article>
-          </li>
-          <li>
-            <!-- Placeholder speaker: replace name, title, employer and bio -->
-            <article class="speaker">
-              <div class="speaker__photo" role="img" aria-label="Speaker photo coming soon">Photo</div>
-              <div class="speaker__meta">
-                <span class="tag tag--soft">Breakout</span>
-                <span class="eyebrow">Dentistry</span>
-              </div>
-              <h2 class="speaker__name">Speaker Name</h2>
-              <p class="speaker__role">Position / Title<span>Place of Employment</span></p>
-              <p class="speaker__bio">A short bio goes here: two or three sentences on the speaker's background and current work. Mention how they got into dentistry and what they'll be talking about on the day.</p>
+              <p class="speaker__bio">Two or three sentences on the speaker's background and current work: how they got into their field and what they'll talk about on the day.</p>
             </article>
           </li>
         </ul>
       </div>
     </section>
+    -->
 
     <!-- Call to action: questions for speakers -->
     <section class="section section--cream speakers-cta" aria-labelledby="ask-cta">
       <div class="container">
         <span class="eyebrow">Before the conference</span>
         <h2 class="h1" id="ask-cta">Have a question for a speaker? <em>Send it in early.</em></h2>
-        <p>Submit your question before February 1, 2027 and we'll pass it on to the speakers ahead of the panels and Q&amp;A.</p>
+        <p>Submit your question by January 18, 2027 and we'll pass it on to the speakers ahead of the panels and Q&amp;A.</p>
         <div class="actions">
           <a class="btn btn--primary" href="ask.html">Submit a question <span class="arrow" aria-hidden="true">→</span></a>
         </div>
@@ -157,6 +106,8 @@
       </div>
       <div class="footer__bottom">
         <p>© <span data-year>2026</span> Pathways to Health</p>
+        <!-- PLACEHOLDER: replace contact@example.com with the real contact email, here and in every file (see plan.md, D) -->
+        <p><a class="link" href="mailto:contact@example.com">contact@example.com</a></p>
       </div>
     </div>
   </footer>
