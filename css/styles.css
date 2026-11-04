@@ -567,11 +567,9 @@ ol {
   display: block;
 }
 
-/* "Get updates" in the nav jumps here; clear the sticky header */
 .hero .signup {
   grid-area: signup;
   margin-bottom: 0;
-  scroll-margin-top: calc(var(--header-height) + var(--space-6));
 }
 
 .hero__details {
@@ -830,9 +828,8 @@ ol {
 }
 
 @media (max-width: 767px) {
-  /* Content runs past the first screen anyway, so no centring */
+  /* Less space above the headline on phones */
   .hero {
-    min-height: 0;
     padding-top: var(--space-6);
   }
 
@@ -1055,6 +1052,128 @@ ol {
 }
 
 /* ==========================================================================
+   Tags — pills for session type and status
+   ========================================================================== */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 2px 10px;
+  border: 1px solid var(--primary);
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.tag--filled {
+  background: var(--primary);
+  color: var(--surface);
+}
+
+.tag--outline {
+  background: var(--surface);
+  color: var(--primary);
+}
+
+.tag--soft {
+  border-color: var(--surface-2);
+  background: var(--surface-2);
+  color: var(--primary);
+}
+
+/* ==========================================================================
+   Speakers page — portrait cards in a grid, then the question CTA
+   ========================================================================== */
+.speakers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-8) var(--space-6);
+}
+
+.speaker {
+  display: grid;
+  align-content: start;
+  gap: var(--space-3);
+}
+
+/* Mist placeholder until the photo arrives; the same class sizes the <img> */
+.speaker__photo {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  margin-bottom: var(--space-2);
+  object-fit: cover;
+  background: var(--surface-2);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--primary);
+}
+
+.speaker__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.speaker__meta .eyebrow {
+  margin-bottom: 0;
+}
+
+.speaker__name {
+  font-family: var(--font-display);
+  font-size: 2rem; /* 32px */
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+.speaker__role {
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+/* Place of employment, on its own line under the title */
+.speaker__role span {
+  display: block;
+  font-weight: 400;
+}
+
+.speaker__bio {
+  max-width: 64ch;
+  margin-top: var(--space-1);
+}
+
+.speakers-cta .h1 {
+  max-width: 20ch;
+  margin-bottom: var(--space-4);
+}
+
+.speakers-cta p {
+  max-width: 52ch;
+}
+
+.speakers-cta .actions {
+  margin-top: var(--space-6);
+}
+
+@media (max-width: 1023px) {
+  .speakers {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .speakers {
+    grid-template-columns: 1fr;
+    gap: var(--space-7);
+  }
+}
+
+/* ==========================================================================
    Footer — the page's one inverse panel
    ========================================================================== */
 .site-footer {
@@ -1105,6 +1224,57 @@ ol {
     grid-template-columns: 1fr;
     align-items: start;
   }
+}
+
+/* ==========================================================================
+   Section-by-section scrolling
+   Pages with html.snap-sections stop at each section and at the footer,
+   on every device. Each section fills the screen below the sticky header
+   (scroll-padding keeps the header from covering a section's top), with its
+   content centered. snap-stop means a hard swipe can't skip a stop.
+   Sections taller than the screen (the speaker grid, the schedule) scroll
+   freely inside, then the next one snaps in.
+   ========================================================================== */
+html.snap-sections {
+  /* The header's full height, counting its 1px bottom border */
+  --snap-header: calc(var(--header-height) + 1px);
+  scroll-snap-type: y mandatory;
+  scroll-padding-top: var(--snap-header);
+}
+
+.snap-sections :is(.hero, .page-header, main > .section) {
+  min-height: calc(100vh - var(--snap-header));
+  /* The screen's height with the browser's toolbars showing (phones,
+     iPad Safari); the same as 100vh on desktops. */
+  min-height: calc(100svh - var(--snap-header));
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+/* Center the content vertically (the hero already does this itself) */
+.snap-sections :is(.page-header, main > .section) {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* A link that jumps to a spot low in a section would otherwise snap on to
+   the next section. Aiming for the middle of the screen keeps the snap on
+   the note's own section (and centers the note when the section is taller
+   than the screen). */
+.snap-sections .footnote {
+  scroll-margin-top: 50vh;
+  scroll-margin-top: 50svh;
+}
+
+/* The page title now has its own screen, so the section after it needs
+   its top padding back */
+.snap-sections .section--flush {
+  padding-top: var(--section-space);
+}
+
+.snap-sections .site-footer {
+  scroll-snap-align: end;
 }
 
 /* ==========================================================================

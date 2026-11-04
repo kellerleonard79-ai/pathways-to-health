@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="snap-sections">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,8 +39,9 @@
   </header>
 
   <main id="main">
-    <!-- Hero -->
-    <section class="hero">
+    <!-- Hero. "Get updates" in the nav jumps here (#updates) rather than to the
+         signup form itself: the hero is a scroll-snap stop, the form isn't. -->
+    <section class="hero" id="updates">
       <div class="container hero__inner">
         <h1 class="display-xl">Pathways <span>to Health</span></h1>
         <div class="dot-rule" aria-hidden="true"></div>
@@ -90,7 +91,7 @@
         <p class="lead">A Pre-Health Conference <span>for the Next Generation of Healthcare Leaders</span></p>
         <p class="hero__details"><time datetime="2027-02-01">February 1, 2027</time><span>Pensacola High School</span></p>
         <!-- Email signup. Set data-endpoint to a form service URL (e.g. Formspree) to collect addresses. -->
-        <form class="signup" id="updates" data-endpoint="" novalidate>
+        <form class="signup" data-endpoint="" novalidate>
           <label class="signup__label" for="signup-email">Get conference updates</label>
           <div class="signup__row">
             <input class="input" id="signup-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required aria-describedby="signup-status">
