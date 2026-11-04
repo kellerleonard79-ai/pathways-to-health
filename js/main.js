@@ -42,46 +42,91 @@
     window.addEventListener("scroll", onScroll, { passive: true });
   }
 
-  // Email signup
-  const signup = document.querySelector(".signup");
+  // Registration form
+  const register = document.querySelector(".register");
 
-  if (signup) {
-    const input = signup.querySelector("input[type=email]");
-    const button = signup.querySelector("button");
-    const status = signup.querySelector(".signup__status");
+  if (register) {
+    const button = register.querySelector("button[type=submit]");
+    const status = register.querySelector(".register__status");
+    const minorToggle = register.querySelector("[data-minor-toggle]");
+    const parent = register.querySelector(".register__parent");
+    const done = document.querySelector(".register__done");
 
     function setStatus(message, isError) {
       status.textContent = message;
       status.classList.toggle("is-error", isError);
-      input.setAttribute("aria-invalid", String(isError));
     }
 
-    signup.addEventListener("submit", async (e) => {
+    function markField(field) {
+      field.setAttribute("aria-invalid", String(!field.checkValidity()));
+    }
+
+    // Parent fields only count (and only submit) when the attendee is under 18
+    function setParent(open) {
+      parent.hidden = !open;
+      parent.querySelectorAll("input").forEach((input) => {
+        input.disabled = !open;
+        if (!open) input.removeAttribute("aria-invalid");
+      });
+    }
+
+    if (minorToggle && parent) {
+      setParent(minorToggle.checked);
+      minorToggle.addEventListener("change", () => setParent(minorToggle.checked));
+    }
+
+    // Once a field has been flagged, clear the flag as soon as it's fixed
+    register.addEventListener("input", (e) => {
+      if (e.target.getAttribute("aria-invalid") === "true") markField(e.target);
+    });
+
+    register.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      if (!input.checkValidity()) {
-        setStatus("Please enter a valid email address.", true);
-        input.focus();
+      const fields = [...register.querySelectorAll("input, select, textarea")].filter(
+        (field) => !field.disabled && field.name !== "company"
+      );
+      fields.forEach(markField);
+      const invalid = fields.find((field) => !field.checkValidity());
+
+      if (invalid) {
+        setStatus("Please fill in the highlighted fields.", true);
+        invalid.focus();
         return;
       }
 
-      const endpoint = signup.dataset.endpoint;
+      const data = new FormData(register);
+      const payload = Object.fromEntries(data);
+      payload.interests = data.getAll("interests");
+      payload.is_minor = data.has("is_minor");
+
+      const endpoint = register.dataset.endpoint;
       button.disabled = true;
+      setStatus("Sending…", false);
 
       try {
         if (endpoint) {
           const res = await fetch(endpoint, {
             method: "POST",
-            headers: { Accept: "application/json" },
-            body: new FormData(signup),
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+              apikey: register.dataset.key,
+            },
+            body: JSON.stringify(payload),
           });
-          if (!res.ok) throw new Error(res.statusText);
+          if (!res.ok) {
+            // The server's message (e.g. "already registered") is meant for people
+            const body = await res.json().catch(() => ({}));
+            throw Object.assign(new Error(res.statusText), { userMessage: body.error });
+          }
         }
-        setStatus("Thanks! We'll be in touch with updates.", false);
-        signup.classList.add("is-done");
-        input.value = "";
-      } catch {
-        setStatus("Something went wrong. Please try again.", true);
+        done.querySelector("[data-done-email]").textContent = payload.email;
+        register.hidden = true;
+        done.hidden = false;
+        done.focus();
+      } catch (err) {
+        setStatus(err.userMessage || "Something went wrong. Please try again.", true);
       } finally {
         button.disabled = false;
       }

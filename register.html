@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" class="snap-sections">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Register — Pathways to Health</title>
-  <meta name="description" content="Register — Pathways to Health.">
+  <meta name="description" content="Register for Pathways to Health, a student-run pre-health conference at Pensacola High School on February 1, 2027.">
   <link rel="icon" type="image/png" href="images/favicon-32.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,7 +32,7 @@
           <li><a class="link" href="schedule.html">Schedule</a></li>
         </ul>
         <ul class="nav__end">
-          <li><a class="btn btn--primary" href="index.html#updates">Get updates</a></li>
+          <li><a class="btn btn--primary" href="register.html" aria-current="page">Register</a></li>
         </ul>
       </div>
     </nav>
@@ -41,7 +41,145 @@
   <main id="main">
     <section class="page-header">
       <div class="container">
+        <span class="eyebrow">Pathways to Health</span>
         <h1 class="display">Register</h1>
+        <div class="dot-rule" aria-hidden="true"></div>
+        <p class="page-header__details"><time datetime="2027-02-01">February 1, 2027</time><span>Pensacola High School</span></p>
+      </div>
+    </section>
+
+    <section class="section section--flush">
+      <div class="container">
+        <!-- Registration. data-endpoint is the URL of the Supabase "register" Edge Function and
+             data-key is the project's publishable key (safe to publish); see README,
+             "Registration backend". Left empty, the form only pretends to submit. -->
+        <form class="register" data-endpoint="" data-key="" novalidate>
+          <p class="register__intro small">Fields marked * are required.</p>
+
+          <fieldset class="register__group">
+            <legend class="h2">About you</legend>
+            <div class="field">
+              <label for="reg-name">Full name <span class="field__req" aria-hidden="true">*</span></label>
+              <input class="input" id="reg-name" name="name" type="text" autocomplete="name" maxlength="120" required>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label for="reg-email">Email <span class="field__req" aria-hidden="true">*</span></label>
+                <input class="input" id="reg-email" name="email" type="email" autocomplete="email" maxlength="254" placeholder="you@example.com" required>
+              </div>
+              <div class="field">
+                <label for="reg-phone">Phone <span class="field__req" aria-hidden="true">*</span></label>
+                <input class="input" id="reg-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="30" required>
+              </div>
+            </div>
+            <div class="field">
+              <label for="reg-street">Street address <span class="field__req" aria-hidden="true">*</span></label>
+              <input class="input" id="reg-street" name="street" type="text" autocomplete="street-address" maxlength="200" required>
+            </div>
+            <div class="field-row field-row--address">
+              <div class="field">
+                <label for="reg-city">City <span class="field__req" aria-hidden="true">*</span></label>
+                <input class="input" id="reg-city" name="city" type="text" autocomplete="address-level2" maxlength="100" required>
+              </div>
+              <div class="field">
+                <label for="reg-state">State <span class="field__req" aria-hidden="true">*</span></label>
+                <input class="input" id="reg-state" name="state" type="text" autocomplete="address-level1" maxlength="50" value="FL" required>
+              </div>
+              <div class="field">
+                <label for="reg-zip">ZIP <span class="field__req" aria-hidden="true">*</span></label>
+                <input class="input" id="reg-zip" name="zip" type="text" autocomplete="postal-code" inputmode="numeric" maxlength="10" pattern="\d{5}(-\d{4})?" required>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="register__group">
+            <legend class="h2">School</legend>
+            <div class="field-row">
+              <div class="field">
+                <label for="reg-school">School name <span class="field__req" aria-hidden="true">*</span></label>
+                <input class="input" id="reg-school" name="school" type="text" autocomplete="organization" maxlength="150" required>
+              </div>
+              <div class="field">
+                <label for="reg-grade">Grade <span class="field__req" aria-hidden="true">*</span></label>
+                <select class="input" id="reg-grade" name="grade" required>
+                  <option value="">Choose one</option>
+                  <option value="9">9th grade</option>
+                  <option value="10">10th grade</option>
+                  <option value="11">11th grade</option>
+                  <option value="12">12th grade</option>
+                  <option value="college">College</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="register__group">
+            <legend class="h2">Career interests</legend>
+            <p class="field__hint small">Pick any that interest you.</p>
+            <ul class="checks">
+              <li><label class="check"><input type="checkbox" name="interests" value="Medicine"> Medicine</label></li>
+              <li><label class="check"><input type="checkbox" name="interests" value="Nursing"> Nursing</label></li>
+              <li><label class="check"><input type="checkbox" name="interests" value="Public Health"> Public Health</label></li>
+              <li><label class="check"><input type="checkbox" name="interests" value="Research"> Research</label></li>
+              <li><label class="check"><input type="checkbox" name="interests" value="Pharmacy"> Pharmacy</label></li>
+              <li><label class="check"><input type="checkbox" name="interests" value="Dentistry"> Dentistry</label></li>
+              <li><label class="check"><input type="checkbox" name="interests" value="Not sure yet"> Not sure yet</label></li>
+            </ul>
+          </fieldset>
+
+          <fieldset class="register__group">
+            <legend class="h2">Parent or guardian</legend>
+            <label class="check"><input type="checkbox" name="is_minor" value="true" data-minor-toggle aria-controls="reg-parent"> I am under 18</label>
+            <div class="register__parent" id="reg-parent" hidden>
+              <p class="field__hint small">We'll copy your parent or guardian on the confirmation email.</p>
+              <div class="field">
+                <label for="reg-parent-name">Parent or guardian name <span class="field__req" aria-hidden="true">*</span></label>
+                <input class="input" id="reg-parent-name" name="parent_name" type="text" maxlength="120" required disabled>
+              </div>
+              <div class="field-row">
+                <div class="field">
+                  <label for="reg-parent-email">Parent or guardian email <span class="field__req" aria-hidden="true">*</span></label>
+                  <input class="input" id="reg-parent-email" name="parent_email" type="email" maxlength="254" required disabled>
+                </div>
+                <div class="field">
+                  <label for="reg-parent-phone">Parent or guardian phone <span class="field__req" aria-hidden="true">*</span></label>
+                  <input class="input" id="reg-parent-phone" name="parent_phone" type="tel" inputmode="tel" maxlength="30" required disabled>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="register__group">
+            <legend class="h2">Anything we should know?</legend>
+            <div class="field">
+              <label for="reg-dietary">Dietary needs</label>
+              <textarea class="input" id="reg-dietary" name="dietary" rows="3" maxlength="1000" placeholder="Allergies, vegetarian, halal…"></textarea>
+            </div>
+            <div class="field">
+              <label for="reg-access">Accessibility needs</label>
+              <textarea class="input" id="reg-access" name="accessibility" rows="3" maxlength="1000"></textarea>
+            </div>
+          </fieldset>
+
+          <!-- Honeypot: hidden from people, filled in by bots. The server ignores any submission that has it. -->
+          <div class="register__trap" aria-hidden="true">
+            <label for="reg-company">Company</label>
+            <input id="reg-company" name="company" type="text" tabindex="-1" autocomplete="off">
+          </div>
+
+          <div class="register__submit">
+            <button class="btn btn--primary btn--lg" type="submit">Register</button>
+            <p class="register__status small" role="status"></p>
+          </div>
+        </form>
+
+        <div class="register__done notice" tabindex="-1" hidden>
+          <div>
+            <h2 class="h2">You're registered.</h2>
+            <p>We've sent a confirmation to <strong data-done-email></strong>. See you on February 1.</p>
+          </div>
+        </div>
       </div>
     </section>
   </main>

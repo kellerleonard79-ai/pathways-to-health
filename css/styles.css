@@ -312,6 +312,12 @@ ol {
   color: var(--accent);
 }
 
+.btn--lg {
+  min-height: 52px;
+  padding: 14px 32px;
+  font-size: 16px;
+}
+
 .btn--secondary {
   background: var(--surface);
   color: var(--primary);
@@ -541,7 +547,7 @@ ol {
     "rule    rule   ."
     "lead    lead   ."
     "details details ."
-    "signup  signup count";
+    "cta     cta    count";
   column-gap: var(--space-6);
 }
 
@@ -567,9 +573,9 @@ ol {
   display: block;
 }
 
-.hero .signup {
-  grid-area: signup;
-  margin-bottom: 0;
+.hero__cta {
+  grid-area: cta;
+  align-self: end;
 }
 
 .hero__details {
@@ -597,24 +603,7 @@ ol {
   margin-right: var(--space-3);
 }
 
-/* Email signup */
-.signup {
-  max-width: 440px;
-  margin-bottom: var(--space-6);
-}
-
-.signup__label {
-  display: block;
-  margin-bottom: var(--space-2);
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.signup__row {
-  display: flex;
-  gap: var(--space-2);
-}
-
+/* Text field */
 .input {
   flex: 1;
   min-width: 0;
@@ -648,17 +637,6 @@ ol {
   border-width: 2px;
 }
 
-.signup__status {
-  margin-top: var(--space-2);
-  opacity: 0.75;
-}
-
-.signup.is-done .signup__status,
-.signup__status.is-error {
-  opacity: 1;
-  font-weight: 500;
-}
-
 /* Countdown: large serif numeral, bottom-right under the branch ends */
 .countdown {
   grid-area: count;
@@ -668,7 +646,7 @@ ol {
   justify-self: end;
   align-self: end;
   gap: var(--space-2);
-  margin-top: var(--space-4); /* clear of the lowest branch, short enough that its foot lines up with the signup's */
+  margin-top: var(--space-4); /* clear of the lowest branch, short enough that its foot lines up with the button's */
   color: var(--primary);
 }
 
@@ -850,7 +828,7 @@ ol {
       "rule"
       "lead"
       "details"
-      "signup"
+      "cta"
       "count";
   }
 
@@ -859,7 +837,7 @@ ol {
     display: none;
   }
 
-  /* Under the form, set off by a hairline, on one line */
+  /* Under the button, set off by a hairline, on one line */
   .countdown {
     flex-direction: row;
     align-items: baseline;
@@ -963,6 +941,168 @@ ol {
 
 .page-header__details {
   margin: var(--space-5) 0 0;
+}
+
+/* ==========================================================================
+   Register page — one column of fieldsets, divided by hairlines
+   ========================================================================== */
+.register,
+.register__done {
+  max-width: 640px;
+}
+
+.register__intro {
+  margin-bottom: var(--space-6);
+  opacity: 0.75;
+}
+
+.register__group {
+  display: grid;
+  gap: var(--space-5);
+  min-width: 0;
+  margin: 0;
+  padding: 0 0 var(--space-7);
+  border: 0;
+}
+
+.register__group + .register__group {
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--surface-2);
+}
+
+.register__group legend {
+  float: left; /* puts the legend inside the grid, so it gets the same gap */
+  width: 100%;
+  padding: 0;
+}
+
+.register__parent {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.register__parent[hidden] {
+  display: none;
+}
+
+.field {
+  display: grid;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.field label {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.field__req {
+  color: var(--primary);
+  opacity: 0.6;
+}
+
+.field__hint {
+  margin-top: calc(var(--space-2) - var(--space-5));
+  opacity: 0.75;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-5) var(--space-4);
+}
+
+.field-row--address {
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr);
+}
+
+textarea.input {
+  min-height: 88px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+/* Select: Mist fill, no border, Green caret */
+select.input {
+  appearance: none;
+  padding-right: 40px;
+  border-color: var(--surface-2);
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23084021' stroke-width='1.5'/%3E%3C/svg%3E")
+    no-repeat right 14px center,
+    var(--surface-2);
+  cursor: pointer;
+}
+
+.checks {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3) var(--space-4);
+}
+
+.check {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 28px;
+  cursor: pointer;
+}
+
+.check input {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+/* Off-screen honeypot */
+.register__trap {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.register__submit {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-3);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--surface-2);
+}
+
+.register__status:empty {
+  display: none;
+}
+
+.register__status.is-error {
+  font-weight: 500;
+}
+
+.register__done[hidden] {
+  display: none;
+}
+
+.register__done .h2 {
+  margin-bottom: var(--space-2);
+}
+
+.register__done:focus {
+  outline: none;
+}
+
+@media (max-width: 767px) {
+  .field-row,
+  .field-row--address {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .checks {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 /* ==========================================================================

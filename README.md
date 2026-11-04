@@ -8,12 +8,13 @@ A minimal, black and white website template: plain HTML, CSS, and a little vanil
 index.html       Home page
 about.html       About page
 speakers.html    Speakers page
-register.html    Register page (green button, top right of the navbar)
+register.html    Registration form (green "Register" button in the navbar and home hero)
 schedule.html    Schedule page
 ask.html         Ask A Question page (linked from the Speakers page only)
 feedback.html    Feedback page (UNLINKED — see below)
 css/styles.css   All styles (design tokens at the top)
-js/main.js       Mobile menu, header scroll border, footer year
+js/main.js       Mobile menu, header scroll border, registration form, hero paths, countdown, footer year
+supabase/        Registration backend: database migration and the "register" Edge Function
 ```
 
 ## Customizing
@@ -32,3 +33,33 @@ js/main.js       Mobile menu, header scroll border, footer year
 ## Adding a page
 
 Copy `about.html`, rename it, replace the content inside `<main>`, and add a link to it in the navbar and footer of every page.
+
+## Registration backend
+
+The form on `register.html` posts to a Supabase Edge Function (`supabase/functions/register`). The function checks the data, saves it to the `registrations` table, and sends a confirmation email through Resend, copying the parent or guardian if one was given. The browser never sees the database or the Resend key. The table has row level security turned on and no public access, so registrations can only be read in the Supabase dashboard (Table Editor → `registrations`) or with the secret key.
+
+One-time setup (Supabase CLI v2; CLI v3 will ask you to confirm each command that changes the hosted project):
+
+1. **Supabase:** create a project at [supabase.com](https://supabase.com), then from this folder:
+   ```sh
+   supabase login
+   supabase link --project-ref <your-project-ref>
+   supabase db push                      # creates the registrations table
+   ```
+2. **Resend:** add and verify your sending domain at [resend.com/domains](https://resend.com/domains) (SPF/DKIM records at your DNS host), then create an API key with sending access. Until the domain is verified, Resend only delivers to your own account's email address.
+3. **Secrets and deploy:**
+   ```sh
+   supabase secrets set RESEND_API_KEY=re_... \
+     RESEND_FROM="Pathways to Health <register@yourdomain.org>" \
+     ALLOWED_ORIGIN=https://yourdomain.org
+   supabase functions deploy register
+   ```
+   `verify_jwt = false` for this function is already set in `supabase/config.toml`. The function checks the publishable key itself.
+4. **Connect the form:** in `register.html`, set the `<form class="register">` attributes:
+   - `data-endpoint="https://<your-project-ref>.supabase.co/functions/v1/register"`
+   - `data-key="sb_publishable_..."` (Project Settings → API Keys → publishable key; it's meant to be public)
+
+To test without spamming real inboxes, register with `delivered@resend.dev`. To see sent mail and any failures, check [resend.com/emails](https://resend.com/emails) and the function's logs in the Supabase dashboard (Edge Functions → register → Logs).
+
+Each email address can register once. A second attempt gets "This email is already registered."
+

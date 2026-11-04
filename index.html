@@ -32,16 +32,15 @@
           <li><a class="link" href="schedule.html">Schedule</a></li>
         </ul>
         <ul class="nav__end">
-          <li><a class="btn btn--primary" href="index.html#updates">Get updates</a></li>
+          <li><a class="btn btn--primary" href="register.html">Register</a></li>
         </ul>
       </div>
     </nav>
   </header>
 
   <main id="main">
-    <!-- Hero. "Get updates" in the nav jumps here (#updates) rather than to the
-         signup form itself: the hero is a scroll-snap stop, the form isn't. -->
-    <section class="hero" id="updates">
+    <!-- Hero -->
+    <section class="hero">
       <div class="container hero__inner">
         <h1 class="display-xl">Pathways <span>to Health</span></h1>
         <div class="dot-rule" aria-hidden="true"></div>
@@ -90,15 +89,9 @@
         </div>
         <p class="lead">A Pre-Health Conference <span>for the Next Generation of Healthcare Leaders</span></p>
         <p class="hero__details"><time datetime="2027-02-01">February 1, 2027</time><span>Pensacola High School</span></p>
-        <!-- Email signup. Set data-endpoint to a form service URL (e.g. Formspree) to collect addresses. -->
-        <form class="signup" data-endpoint="" novalidate>
-          <label class="signup__label" for="signup-email">Get conference updates</label>
-          <div class="signup__row">
-            <input class="input" id="signup-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required aria-describedby="signup-status">
-            <button class="btn btn--primary" type="submit">Notify me</button>
-          </div>
-          <p class="signup__status small" id="signup-status" role="status">Speaker announcements and registration dates. No spam.</p>
-        </form>
+        <div class="hero__cta">
+          <a class="btn btn--primary btn--lg" href="register.html">Register</a>
+        </div>
         <!-- Days until the event. data-countdown is the conference date (YYYY-MM-DD);
              keep it in step with the date above. Leave it empty to hide the countdown. -->
         <p class="countdown" data-countdown="2027-02-01">
