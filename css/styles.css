@@ -1279,13 +1279,17 @@ html.snap-sections {
 }
 
 /* Each row of speakers is a stop, with one row gap of space under the
-   header. The first row keeps the section's top padding instead, so it
-   lands on the section's own stop rather than adding a second stop just
-   below it. The first row is 3 cards, then 2, then 1 as the grid narrows.
-   The section itself stops being a snap target: it's taller than the
-   screen, which would let the scroll rest anywhere inside it. */
+   header. The grid's own top padding gives the first row that same space,
+   so its stop is the top of the page. The section itself stops being a
+   snap target: it's taller than the screen, which would let the scroll
+   rest anywhere inside it. */
 .snap-sections main > .section:has(.speakers) {
+  padding-top: 0;
   scroll-snap-align: none;
+}
+
+.snap-sections .speakers {
+  padding-top: var(--speakers-row-gap);
 }
 
 .snap-sections .speakers > li {
@@ -1294,20 +1298,23 @@ html.snap-sections {
   scroll-snap-stop: always;
 }
 
-.snap-sections .speakers > li:nth-child(-n + 3) {
-  scroll-margin-top: var(--section-space);
+/* A whole card fits on the screen, with a row gap above and below it. When
+   the screen is too short, the photo gives up height (cropping, not
+   squashing) and the text keeps its size. */
+.snap-sections .speaker {
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - var(--snap-header) - 2 * var(--speakers-row-gap));
+  max-height: calc(100svh - var(--snap-header) - 2 * var(--speakers-row-gap));
 }
 
-@media (max-width: 1023px) {
-  .snap-sections .speakers > li:nth-child(3) {
-    scroll-margin-top: var(--speakers-row-gap);
-  }
+.snap-sections .speaker > * {
+  flex-shrink: 0;
 }
 
-@media (max-width: 767px) {
-  .snap-sections .speakers > li:nth-child(2) {
-    scroll-margin-top: var(--speakers-row-gap);
-  }
+.snap-sections .speaker__photo {
+  flex-shrink: 1;
+  min-height: 0;
 }
 
 /* ==========================================================================
