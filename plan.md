@@ -12,13 +12,13 @@ Status as of November 4, 2026. The site has no domain yet, so Resend can only se
 
 Registrations save to Supabase now; emails are added later.
 
-- [ ] Change the `register` function to report whether a confirmation email was sent (for example `{ ok: true, emailed: false }`)
-- [ ] Change the success panel on `register.html` to say "We've sent a confirmation to …" only when an email went out, and just "You're registered" otherwise
-- [ ] Deploy the function: `supabase functions deploy register`
-- [ ] Fill in the form's attributes in `register.html`:
+- [x] Change the `register` function to report whether a confirmation email was sent (for example `{ ok: true, emailed: false }`)
+- [x] Change the success panel on `register.html` to say "We've sent a confirmation to …" only when an email went out, and just "You're registered" otherwise
+- [x] Deploy the function: `supabase functions deploy register`
+- [x] Fill in the form's attributes in `register.html`:
   - `data-endpoint="https://qsozyqnofuchttyigqhp.supabase.co/functions/v1/register"`
   - `data-key="sb_publishable_..."` (Project Settings → API Keys → `default` publishable key)
-- [ ] Run the full test: a valid registration, a duplicate email, a bad submission, and the bot trap. Afterwards, delete only the test rows.
+- [x] Run the full test: a valid registration, a duplicate email, a bad submission, and the bot trap. Afterwards, delete only the test rows.
 
 The function already skips the email when `RESEND_API_KEY` or `RESEND_FROM` isn't set and logs it instead, so nothing breaks without them.
 
@@ -61,15 +61,15 @@ From a full review of the site on November 4, 2026. Work through these in any or
 
 The form's `data-endpoint` is empty (`register.html:17`), so it shows "You're registered" without saving anything. Don't share the site publicly until this is fixed.
 
-- [ ] Finish "1. Go live without emails" above
+- [x] Finish "1. Go live without emails" above
 
 ### B. Don't promise emails that aren't sent
 
 Until a domain is verified in Resend, most attendees won't get a confirmation email.
 
-- [ ] Success panel (`register.html:180`): covered in step 1 above
-- [ ] Duplicate-email error (`supabase/functions/register/index.ts:215`): drop "Check your inbox for the confirmation", or only say it once emails are going out. For example: "This email is already registered. If you need to change anything, contact us at …"
-- [ ] Redeploy the function: `supabase functions deploy register`
+- [x] Success panel (`register.html:180`): covered in step 1 above
+- [x] Duplicate-email error (`supabase/functions/register/index.ts`): now just "This email is already registered." Add the contact email to it once D is done.
+- [x] Redeploy the function: `supabase functions deploy register`
 
 ### C. Ask A Question page is empty
 

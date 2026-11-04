@@ -105,6 +105,7 @@
       setStatus("Sending…", false);
 
       try {
+        let emailed = false;
         if (endpoint) {
           const res = await fetch(endpoint, {
             method: "POST",
@@ -120,8 +121,11 @@
             const body = await res.json().catch(() => ({}));
             throw Object.assign(new Error(res.statusText), { userMessage: body.error });
           }
+          const body = await res.json().catch(() => ({}));
+          emailed = body.emailed === true;
         }
         done.querySelector("[data-done-email]").textContent = payload.email;
+        done.querySelector("[data-done-emailed]").hidden = !emailed;
         register.hidden = true;
         done.hidden = false;
         done.focus();

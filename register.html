@@ -53,7 +53,7 @@
         <!-- Registration. data-endpoint is the URL of the Supabase "register" Edge Function and
              data-key is the project's publishable key (safe to publish); see README,
              "Registration backend". Left empty, the form only pretends to submit. -->
-        <form class="register" data-endpoint="" data-key="" novalidate>
+        <form class="register" data-endpoint="https://qsozyqnofuchttyigqhp.supabase.co/functions/v1/register" data-key="sb_publishable_E7BUFubj4NgjQLLe2GDYeg_RGMzfdkv" novalidate>
           <p class="register__intro small">Fields marked * are required.</p>
 
           <fieldset class="register__group">
@@ -177,7 +177,9 @@
         <div class="register__done notice" tabindex="-1" hidden>
           <div>
             <h2 class="h2">You're registered.</h2>
-            <p>We've sent a confirmation to <strong data-done-email></strong>. See you on February 1.</p>
+            <!-- The first line shows only when the server says a confirmation email went out -->
+            <p data-done-emailed hidden>We've sent a confirmation to <strong data-done-email></strong>.</p>
+            <p>See you on February 1 at Pensacola High School.</p>
           </div>
         </div>
       </div>

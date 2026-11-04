@@ -1288,16 +1288,19 @@ select.input {
   margin-top: var(--space-1);
 }
 
-.speakers-cta .h1 {
+.speakers-cta .h1,
+.final-cta .h1 {
   max-width: 20ch;
   margin-bottom: var(--space-4);
 }
 
-.speakers-cta p {
+.speakers-cta p,
+.final-cta p {
   max-width: 52ch;
 }
 
-.speakers-cta .actions {
+.speakers-cta .actions,
+.final-cta .actions {
   margin-top: var(--space-6);
 }
 

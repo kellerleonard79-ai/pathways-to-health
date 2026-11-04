@@ -149,31 +149,38 @@ function confirmationEmail(r: Registration) {
   return { subject: "You're registered for Pathways to Health", html, text };
 }
 
-async function sendConfirmation(id: string, r: Registration) {
+// Returns whether Resend accepted the email
+async function sendConfirmation(id: string, r: Registration): Promise<boolean> {
   const apiKey = Deno.env.get("RESEND_API_KEY");
   const from = Deno.env.get("RESEND_FROM");
   if (!apiKey || !from) {
     console.error("RESEND_API_KEY or RESEND_FROM is not set; skipping confirmation email");
-    return;
+    return false;
   }
 
-  const res = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-      "Idempotency-Key": `registration-confirmation/${id}`,
-    },
-    body: JSON.stringify({
-      from,
-      to: [r.email],
-      cc: r.parent_email && r.parent_email !== r.email ? [r.parent_email] : undefined,
-      ...confirmationEmail(r),
-    }),
-  });
+  try {
+    const res = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+        "Idempotency-Key": `registration-confirmation/${id}`,
+      },
+      body: JSON.stringify({
+        from,
+        to: [r.email],
+        cc: r.parent_email && r.parent_email !== r.email ? [r.parent_email] : undefined,
+        ...confirmationEmail(r),
+      }),
+    });
 
-  if (!res.ok) {
-    console.error(`Resend failed for registration ${id}: ${res.status} ${await res.text()}`);
+    if (!res.ok) {
+      console.error(`Resend failed for registration ${id}: ${res.status} ${await res.text()}`);
+    }
+    return res.ok;
+  } catch (err) {
+    console.error(`Resend unreachable for registration ${id}:`, err);
+    return false;
   }
 }
 
@@ -212,16 +219,17 @@ export default {
 
       if (dbError) {
         if (dbError.code === "23505") {
-          return error(409, "This email is already registered. Check your inbox for the confirmation.");
+          return error(409, "This email is already registered.");
         }
         console.error("Insert failed:", dbError);
         return error(500, "Something went wrong. Please try again.");
       }
 
-      // The registration is saved either way; a failed email is logged, not shown
-      await sendConfirmation(data.id, registration);
+      // The registration is saved either way; a failed email is logged, and the
+      // page only mentions an email when one went out
+      const emailed = await sendConfirmation(data.id, registration);
 
-      return Response.json({ ok: true });
+      return Response.json({ ok: true, emailed });
     },
   ),
 };
