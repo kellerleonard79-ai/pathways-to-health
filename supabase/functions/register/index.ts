@@ -82,12 +82,17 @@ function validate(body: Record<string, unknown>): Registration | string {
   const required = ["name", "email", "phone", "school"] as const;
   if (required.some((key) => !r[key])) return "Please fill in all the required fields.";
   if (!EMAIL.test(r.email)) return "Please enter a valid email address.";
+  // The table requires at least 7 characters, matching minlength on the form
+  if (r.phone.length < 7) return "Please enter your full phone number.";
   if (!(r.grade in GRADES)) return "Please choose your grade.";
   if (is_minor && (!r.parent_name || !r.parent_phone || !r.parent_email)) {
     return "Please add a parent or guardian's name, email, and phone.";
   }
   if (is_minor && !EMAIL.test(r.parent_email!)) {
     return "Please enter a valid parent or guardian email.";
+  }
+  if (is_minor && r.parent_phone!.length < 7) {
+    return "Please enter your parent or guardian's full phone number.";
   }
   return r;
 }

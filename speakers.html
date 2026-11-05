@@ -60,6 +60,9 @@
           <p>We're confirming our speakers now: doctors, nurses, researchers, and public health professionals. Check back soon for the lineup.</p>
         </div>
       </div>
+      <!-- Next-section cue. Once the speakers grid is back, point this at it instead
+           (href="#lineup", label "Speakers") and give the grid's section id="lineup". -->
+      <a class="next-cue" href="#ask" aria-label="Next section: Ask a speaker">Ask a speaker <span class="next-cue__arrow" aria-hidden="true">↓</span></a>
     </section>
 
     <!-- Speakers grid: add it back here once speakers are confirmed, with one <li> per speaker.
@@ -87,7 +90,7 @@
     -->
 
     <!-- Call to action: questions for speakers -->
-    <section class="section section--cream speakers-cta" aria-labelledby="ask-cta">
+    <section class="section section--cream speakers-cta" id="ask" aria-labelledby="ask-cta">
       <div class="container">
         <span class="eyebrow">Before the conference</span>
         <h2 class="h1" id="ask-cta">Have a question for a speaker? <em>Send it in early.</em></h2>

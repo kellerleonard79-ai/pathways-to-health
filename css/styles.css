@@ -821,7 +821,6 @@ ol {
   }
 
   .hero__inner {
-    --paths-height: 110px;
     grid-template-columns: minmax(0, 1fr);
     grid-template-areas:
       "title"
@@ -832,9 +831,14 @@ ol {
       "count";
   }
 
-  /* Too little room beside the branches for labels on a phone */
-  .paths__labels {
+  /* Too narrow for the branching paths on a phone; the rule runs full width
+     on its own instead of handing off to them */
+  .hero__paths {
     display: none;
+  }
+
+  .hero .dot-rule {
+    margin-right: 0;
   }
 
   /* Under the button, set off by a hairline, on one line */
@@ -1509,6 +1513,57 @@ html.snap-sections {
   min-height: 0;
 }
 
+/* "What's next" cue: a small pill at the bottom of a snapped screen that
+   names the next section and jumps to it. It sits in the section's bottom
+   padding, so it never covers content. With JS, cues fade in as their
+   screen snaps into view (js/main.js); without it they simply show. */
+.snap-sections :is(.page-header, main > .section) {
+  position: relative;
+}
+
+.next-cue {
+  position: absolute;
+  bottom: var(--space-4);
+  left: 50%;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 40px;
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-pill);
+  background: var(--surface-2);
+  color: var(--primary);
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  transform: translateX(-50%);
+  transition:
+    opacity 0.5s var(--ease),
+    transform 0.5s var(--ease),
+    background-color var(--duration) var(--ease),
+    color var(--duration) var(--ease);
+}
+
+.next-cue:hover {
+  background: var(--primary);
+  color: var(--surface);
+}
+
+.next-cue.is-away {
+  opacity: 0;
+  transform: translate(-50%, var(--space-2));
+}
+
+.next-cue__arrow {
+  animation: next-cue-nudge 1.6s var(--ease) infinite;
+}
+
+@keyframes next-cue-nudge {
+  50% {
+    transform: translateY(3px);
+  }
+}
+
 /* ==========================================================================
    Motion preferences
    ========================================================================== */
@@ -1519,7 +1574,8 @@ html.snap-sections {
 
   .paths,
   .paths__labels,
-  .dot-rule::after {
+  .dot-rule::after,
+  .next-cue__arrow {
     animation: none !important;
   }
 

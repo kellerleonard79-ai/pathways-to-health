@@ -42,6 +42,24 @@
     window.addEventListener("scroll", onScroll, { passive: true });
   }
 
+  // "What's next" cues on snap pages: fade each one in once it's fully on
+  // screen (its section has snapped into view), and out again as it leaves.
+  // The sticky header's strip doesn't count as on screen, since it covers it.
+  const cues = document.querySelectorAll(".next-cue");
+
+  if (cues.length && "IntersectionObserver" in window) {
+    const headerHeight = header ? header.offsetHeight : 0;
+    const cueObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          entry.target.classList.toggle("is-away", entry.intersectionRatio < 0.99);
+        });
+      },
+      { threshold: 1, rootMargin: `-${headerHeight}px 0px 0px 0px` }
+    );
+    cues.forEach((cue) => cueObserver.observe(cue));
+  }
+
   // Forms: registration (register.html), questions for speakers (ask.html) and
   // feedback (feedback.html). All share the .register styles; the parent fields
   // are registration only.
