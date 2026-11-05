@@ -943,9 +943,15 @@ ol {
   margin: var(--space-5) 0 0;
 }
 
-/* About page questions: one per row, divided by hairlines */
+/* About page questions: the heading on top, then one question per row,
+   divided by hairlines */
+.faq__title {
+  margin-bottom: var(--space-6);
+}
+
 .faq {
-  gap: 0;
+  display: grid;
+  max-width: 64ch;
   margin: 0;
 }
 
