@@ -61,45 +61,41 @@
       <a class="next-cue" href="#faqs" aria-label="Next section: FAQs">FAQs <span class="next-cue__arrow" aria-hidden="true">↓</span></a>
     </section>
 
-    <!-- Practical details. One <div> per question; keep answers short. -->
+    <!-- Practical details. One <details> per question; keep answers short. -->
     <section class="section" id="faqs" aria-labelledby="faq">
-      <div class="container">
-        <h2 class="h1 faq__title" id="faq">Questions <em>and answers</em></h2>
-        <dl class="faq">
-          <div>
-            <dt class="h3">Who can attend?</dt>
-            <dd>High school and college students who are curious about a career in healthcare.</dd>
-          </div>
-          <div>
-            <dt class="h3">When and where is it?</dt>
-            <dd>Saturday, February 6, 2027, at <a href="https://www.google.com/maps/search/?api=1&amp;query=Pensacola+High+School%2C+500+W+Maxwell+St%2C+Pensacola%2C+FL+32501">Pensacola High School, 500 West Maxwell Street, Pensacola, FL 32501</a>. Check-in opens at 8:00 AM, and closing remarks start at 4:00 PM. See the <a href="schedule.html">full schedule</a>.</dd>
-          </div>
-          <div>
-            <dt class="h3">Where do I park?</dt>
-            <dd>Parking on campus is free.</dd>
-          </div>
-          <div>
-            <dt class="h3">What should I wear?</dt>
-            <dd>Business casual. You'll be meeting doctors, nurses, and other professionals, so it's good practice.</dd>
-          </div>
-          <div>
-            <dt class="h3">Do I need to register?</dt>
-            <dd>Yes, please <a href="register.html">register</a> ahead of time. If you're under 18, you'll need your parent or guardian's name, email, and phone number.</dd>
-          </div>
-          <div>
-            <dt class="h3">Can parents come?</dt>
-            <dd>Yes, parents and guardians are welcome.</dd>
-          </div>
-          <div>
-            <dt class="h3">Can I send a question to a speaker?</dt>
-            <dd>Yes. <a href="ask.html">Send it in</a> by January 18, 2027, and we'll pass it on before the conference.</dd>
-          </div>
-          <div>
-            <dt class="h3">I have another question.</dt>
+      <div class="container split faq-split">
+        <h2 class="h1 faq__title" id="faq">FAQs</h2>
+        <div class="faq">
+          <details>
+            <summary><span class="faq__q">Who can attend?</span><span class="faq__icon" aria-hidden="true"></span></summary>
+            <p class="faq__a">High school and college students who are curious about a career in healthcare.</p>
+          </details>
+          <details>
+            <summary><span class="faq__q">When and where is it?</span><span class="faq__icon" aria-hidden="true"></span></summary>
+            <p class="faq__a">Saturday, February 6, 2027, at <a href="https://www.google.com/maps/search/?api=1&amp;query=Pensacola+High+School%2C+500+W+Maxwell+St%2C+Pensacola%2C+FL+32501">Pensacola High School, 500 West Maxwell Street, Pensacola, FL 32501</a>. Check-in opens at 8:00 AM, and closing remarks start at 4:00 PM. See the <a href="schedule.html">full schedule</a>.</p>
+          </details>
+          <details>
+            <summary><span class="faq__q">Where do I park?</span><span class="faq__icon" aria-hidden="true"></span></summary>
+            <p class="faq__a">Parking on campus is free.</p>
+          </details>
+          <details>
+            <summary><span class="faq__q">What should I wear?</span><span class="faq__icon" aria-hidden="true"></span></summary>
+            <p class="faq__a">Business casual. You'll be meeting doctors, nurses, and other professionals, so it's good practice.</p>
+          </details>
+          <details>
+            <summary><span class="faq__q">Can parents come?</span><span class="faq__icon" aria-hidden="true"></span></summary>
+            <p class="faq__a">Yes, parents and guardians are welcome.</p>
+          </details>
+          <details>
+            <summary><span class="faq__q">Can I send a question to a speaker?</span><span class="faq__icon" aria-hidden="true"></span></summary>
+            <p class="faq__a">Yes. <a href="ask.html">Send it in</a> by January 18, 2027, and we'll pass it on before the conference.</p>
+          </details>
+          <details>
+            <summary><span class="faq__q">I have another question.</span><span class="faq__icon" aria-hidden="true"></span></summary>
             <!-- PLACEHOLDER: replace contact@example.com with the real contact email (see plan.md, D) -->
-            <dd>Email us at <a href="mailto:contact@example.com">contact@example.com</a>.</dd>
-          </div>
-        </dl>
+            <p class="faq__a">Email us at <a href="mailto:contact@example.com">contact@example.com</a>.</p>
+          </details>
+        </div>
       </div>
     </section>
   </main>

@@ -983,32 +983,128 @@ ol {
   margin: var(--space-5) 0 0;
 }
 
-/* About page questions: the heading on top, then one question per row,
-   divided by hairlines */
+/* About page questions: the heading on the left, an accordion on the right.
+   Each question is a row between hairlines with a round +/- button; the
+   answer opens below it. Native <details>, so it works without JavaScript. */
+/* The whole list fits on one screen: tighter section padding, and rows
+   that shrink on shorter screens */
+#faqs {
+  padding: var(--space-7) 0;
+}
+
+/* Two equal columns so the title can grow toward the list's height.
+   The title is sized off its column (FAQs is about 1.65em wide). */
+.faq-split {
+  grid-template-columns: 1fr 1fr;
+  align-items: start;
+  container-type: inline-size;
+}
+
 .faq__title {
-  margin-bottom: var(--space-6);
+  margin: 0;
+  font-size: min(16rem, (100cqi - var(--space-8)) / 2 / 2.1);
+  line-height: 0.8;
+  letter-spacing: -0.02em;
 }
 
 .faq {
-  display: grid;
-  max-width: 64ch;
-  margin: 0;
+  min-width: 0;
+  border-bottom: 1px solid var(--surface-2);
 }
 
-.faq > div {
-  display: grid;
-  gap: var(--space-2);
-  padding: var(--space-5) 0;
+.faq details {
   border-top: 1px solid var(--surface-2);
 }
 
-.faq > div:first-child {
-  padding-top: 0;
-  border-top: 0;
+.faq summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  padding: clamp(8px, 1.6vh, 20px) 0;
+  cursor: pointer;
+  list-style: none;
 }
 
-.faq dd {
-  margin: 0;
+.faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq__q {
+  font-size: clamp(1.0625rem, 1.6vw, 1.25rem); /* 20px max */
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--primary);
+}
+
+/* The round button, with a plus drawn from two bars; the vertical bar
+   turns flat when the answer is open, leaving a minus */
+.faq__icon {
+  position: relative;
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--surface-2);
+  transition: background-color var(--duration) var(--ease);
+}
+
+.faq__icon::before,
+.faq__icon::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 1.5px;
+  background: var(--primary);
+  transform: translate(-50%, -50%);
+  transition: transform var(--duration) var(--ease);
+}
+
+.faq__icon::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.faq details[open] .faq__icon::after {
+  transform: translate(-50%, -50%) rotate(0deg);
+}
+
+.faq summary:hover .faq__icon {
+  background: color-mix(in srgb, var(--surface-2) 70%, var(--primary) 12%);
+}
+
+.faq summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.faq__a {
+  max-width: 60ch;
+  padding: 0 calc(36px + var(--space-5)) clamp(12px, 2vh, 24px) 0;
+}
+
+@media (max-width: 767px) {
+  #faqs {
+    padding: var(--space-6) 0;
+  }
+
+  .faq-split {
+    grid-template-columns: 1fr;
+  }
+
+  .faq__title {
+    font-size: min(6rem, 100cqi / 2.1);
+  }
+
+  .faq__icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .faq__a {
+    padding-right: 0;
+  }
 }
 
 /* Links inside an answer stay inline: green text, gold underline */
