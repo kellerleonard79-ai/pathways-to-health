@@ -1569,6 +1569,10 @@ html.snap-sections {
   --snap-header: calc(var(--header-height) + 1px);
   scroll-snap-type: y mandatory;
   scroll-padding-top: var(--snap-header);
+  /* No elastic bounce past the ends: a fast swipe back up to the first
+     section overshot the top and showed blank white above the header
+     before springing back */
+  overscroll-behavior-y: none;
 }
 
 .snap-sections :is(.hero, .page-header, main > .section) {
