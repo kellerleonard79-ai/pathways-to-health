@@ -532,6 +532,7 @@ ol {
   display: flex; /* centres the hero in the first screen */
   align-items: center;
   min-height: calc(100svh - var(--header-height));
+  min-height: calc(100dvh - var(--header-height));
   padding: var(--space-7) 0 var(--space-8);
   overflow: hidden;
 }
@@ -837,14 +838,49 @@ ol {
     display: none;
   }
 
+  /* Everything centered on phones */
+  .hero__inner {
+    text-align: center;
+  }
+
+  .hero__details {
+    justify-content: center;
+  }
+
+  .hero__cta {
+    justify-self: center;
+  }
+
+  /* A short centered rule: the dot sits in the middle and the line draws
+     outward from it to both sides */
   .hero .dot-rule {
-    margin-right: 0;
+    position: relative;
+    justify-content: center;
+    justify-self: center;
+    width: min(220px, 100%);
+    margin: var(--space-6) 0;
+  }
+
+  .hero .dot-rule::before {
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 0 0 5px var(--surface); /* a little air between dot and line */
+  }
+
+  .hero .dot-rule::after {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    margin-top: -1px;
+    transform-origin: center;
   }
 
   /* Under the button, set off by a hairline, on one line */
   .countdown {
     flex-direction: row;
     align-items: baseline;
+    justify-content: center;
     gap: var(--space-3);
     justify-self: stretch;
     margin: var(--space-6) 0 0;
@@ -1444,6 +1480,11 @@ html.snap-sections {
   /* The screen's height with the browser's toolbars showing (phones,
      iPad Safari); the same as 100vh on desktops. */
   min-height: calc(100svh - var(--snap-header));
+  /* The screen's actual current height. On phones svh stays at the
+     toolbars-showing height, so once Safari tucks its toolbars away each
+     screen came up short and the top of the next section (e.g. the
+     "What we do" eyebrow) showed under it. dvh follows the toolbars. */
+  min-height: calc(100dvh - var(--snap-header));
   scroll-snap-align: start;
   scroll-snap-stop: always;
 }
